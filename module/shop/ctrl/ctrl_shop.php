@@ -96,8 +96,6 @@ switch ($_GET['op']) {
         $motor = ($all_search[1]['type_car'][0]);
         $brand = ($all_search[2]['brand_car']);
 
-        // echo json_encode($brand);
-        // exit;
         try {
             $dao = new DAOShop();
             if (($motor != "0") && ($brand == "0") && ($city == "0")) {
@@ -323,6 +321,6 @@ switch ($_GET['op']) {
 
 
     default;
-        include("module/exceptions/views/pages/error404.php");
+        include("module/exceptions/views/inc/error404.php");
         break;
 }

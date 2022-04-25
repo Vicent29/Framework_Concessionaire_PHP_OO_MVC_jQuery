@@ -1,32 +1,48 @@
 <?php
-class common
-{
-    public static function load_error()
-    {
-        require_once(VIEW_PATH_PAGES . 'top_page.html');
-        require_once(VIEW_PATH_PAGES . 'header.html');
-        require_once(VIEW_PATH_PAGES . 'menu.html');
-        require_once(VIEW_PATH_PAGES . '404.html');
-        require_once(VIEW_PATH_PAGES . 'footer.html');
+class common {
+    
+    public static function load_error() {
+        require_once(VIEW_PATH_INC . 'top_page.php');
+        require_once(VIEW_PATH_INC . 'header.html');
+        require_once(VIEW_PATH_INC . 'menu.html');
+        require_once(VIEW_PATH_INC . '404.html');
+        require_once(VIEW_PATH_INC . 'footer.html');
        
 
     } //end load error
 
-    public static function load_view($top_page, $view)
-    {
-        $top_page = VIEW_PATH_PAGES . $top_page;
-        $top_page_default = VIEW_PATH_PAGES . 'top_page.html';
+    public static function load_view($top_page, $view) {
+        $top_page = VIEW_PATH_INC . $top_page;
+        $top_page_default = VIEW_PATH_INC . 'top_page.php';
         if ((file_exists($top_page)) && (file_exists($view)) && (file_exists($top_page_default))) {
             require_once($top_page_default);
             require_once($top_page);
-            require_once(VIEW_PATH_PAGES . 'header.html');
-            require_once(VIEW_PATH_PAGES . 'menu.html');
+            require_once(VIEW_PATH_INC . 'header.html');
+            require_once(VIEW_PATH_INC . 'menu.html');
             require_once($view);
-            require_once(VIEW_PATH_PAGES . 'footer.html');
-        } else {
+            require_once(VIEW_PATH_INC . 'footer.html');
+        } else { 
             self::load_error();
         } //end else if
     } //end load_view
+
+
+    public static function load_model($model, $function = null, $args = null) {
+        $dir = explode('_', $model);
+        $path = constant('MODEL_' . strtoupper($dir[0])) .  $model . '.class.singleton.php';
+        ///Framework_Concesionaire/module/home/model/model/home_model.class.singleton.php
+        if (file_exists($path)) {
+            require_once ($path);
+            if (method_exists($model, $function)) {
+                $obj = $model::getInstance();
+                if ($args != null) {
+                    return call_user_func(array($obj, $function), $args);
+                }
+                return call_user_func(array($obj, $function));
+            }
+        }
+        throw new Exception();
+    }//end_laod_model
 
 
     function friendlyURL($url) {

@@ -50,7 +50,7 @@ function send_email(content_email) {
     ajaxPromise('?module=contact&op=send_email_contact', 'POST', 'JSON', content_email)
         .then(function (data) {
             toastr.success('Email sended');
-            location.reload();
+            setTimeout('location.reload()', 1500);
         }).catch(function(error) {
             toastr.error('Something happend when trying to send.', 'Error');
         });

@@ -94,6 +94,6 @@ switch ($_GET['op']) {
         break;
 
     default:
-        include("view/inc/error/error404.php");
+        include("module/exceptions/views/inc/error404.php");
         break;
 }

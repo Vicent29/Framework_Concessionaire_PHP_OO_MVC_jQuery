@@ -23,7 +23,7 @@
     define('UTILS', SITE_ROOT . 'utils/');
 
     //VIEW
-    define('VIEW_PATH_PAGES', SITE_ROOT . 'views/pages/');
+    define('VIEW_PATH_INC', SITE_ROOT . 'views/inc/');
 
     //CSS
     define('CSS_PATH', SITE_ROOT . 'views/css/');
@@ -33,6 +33,13 @@
     
     //IMG
     define('IMG_PATH', SITE_ROOT . 'views/img/');
+
+    //MODEL_HOME
+    define('DAO_HOME', SITE_ROOT . 'module/home/model/DAO/');
+    define('BLL_HOME', SITE_ROOT . 'module/home/model/BLL/');
+    define('MODEL_HOME', SITE_ROOT . 'module/home/model/model/');
+    define('JS_VIEW_HOME', SITE_PATH . 'module/home/view/js/');
+    define ('VIEW_PATH_HOME', SITE_ROOT . 'module/home/view/');
     
     //MODEL_CONTACT
     define('MODEL_CONTACT', SITE_ROOT . 'module/contact/model/model/');

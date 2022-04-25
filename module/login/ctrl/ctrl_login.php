@@ -8,7 +8,7 @@ include($path . "/model/middleware_auth.php");
 switch ($_GET['op']) {
     case 'login-register_view';
         include("module/login/view/login-register.html");
-        include('views/pages/footer.html');
+        include('views/inc/footer.html');
         break;
 
     case 'register':
@@ -142,6 +142,6 @@ switch ($_GET['op']) {
         break;
 
     default;
-        include("module/exceptions/views/pages/error404.php");
+        include("module/exceptions/views/inc/error404.php");
         break;
 }

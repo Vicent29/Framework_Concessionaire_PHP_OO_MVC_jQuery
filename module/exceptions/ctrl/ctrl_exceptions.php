@@ -10,14 +10,14 @@ switch ($_GET['op']) {
         $daoexcep = new DAOException();
         $rdo = $daoexcep->register_exception($_GET['type'], $_GET['lugar']);
 
-        include("module/exceptions/views/pages/error404.php");
+        include("module/exceptions/views/inc/error404.php");
         break;
 
     case '503';
         $daoexcep = new DAOException();
         $rdo = $daoexcep->register_exception($_GET['type'], $_GET['lugar']);
 
-        include("module/exceptions/views/pages/error503.php");
+        include("module/exceptions/views/inc/error503.php");
         break;
 
     case 'list_exceptions':
@@ -33,11 +33,11 @@ switch ($_GET['op']) {
             $callback = 'index.php?module=ctrl_exceptions&op=503&type=503&lugar=DAO_car List exceptions';
             die('<script>window.location.href="' . $callback . '";</script>');
         } else {
-            include("module/exceptions/views/pages/list_exceptions.php");
+            include("module/exceptions/views/inc/list_exceptions.php");
         }
         break;
 
     default;
-        include("module/exceptions/views/pages/error404.php");
+        include("module/exceptions/views/inc/error404.php");
         break;
 }

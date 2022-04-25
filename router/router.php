@@ -1,7 +1,9 @@
 <?php
-    require_once('paths.php');
-    require_once('utils/common.inc.php');
-    require_once('utils/mail.inc.php');
+    // require_once('paths.php');
+    // require_once('utils/common.inc.php');
+    // require_once('utils/mail.inc.php');
+    // require_once('model/db.class.singleton.php');
+    require_once('autoload.php');
 
     ob_start();
     session_start();
@@ -27,7 +29,7 @@
             if(isset($_GET['op'])){
                 $this -> uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
             }else{
-                $this -> uriFunction = 'list';
+                $this -> uriFunction = 'view';
             }
         }
     
