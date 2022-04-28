@@ -26,10 +26,12 @@
     define('VIEW_PATH_INC', SITE_ROOT . 'views/inc/');
 
     //CSS
-    define('CSS_PATH', SITE_ROOT . 'views/css/');
+    // define('CSS_PATH', SITE_ROOT . 'views/css/');
+    define('CSS_PATH', 'views/css/');
     
     //JS
-    define('JS_PATH', SITE_ROOT . 'views/js/');
+    // define('JS_PATH', SITE_ROOT . 'views/js/');
+    define('JS_PATH', PROJECT . 'views/js/');
     
     //IMG
     define('IMG_PATH', SITE_ROOT . 'views/img/');
@@ -40,6 +42,13 @@
     define('MODEL_HOME', SITE_ROOT . 'module/home/model/model/');
     define('JS_VIEW_HOME', SITE_PATH . 'module/home/view/js/');
     define ('VIEW_PATH_HOME', SITE_ROOT . 'module/home/view/');
+
+    //MODEL_SHOP
+    define('DAO_SHOP', SITE_ROOT . 'module/shop/model/DAO/');
+    define('BLL_SHOP', SITE_ROOT . 'module/shop/model/BLL/');
+    define('MODEL_SHOP', SITE_ROOT . 'module/shop/model/model/');
+    define('JS_VIEW_SHOP', SITE_PATH . 'module/shop/view/js/');
+    define ('VIEW_PATH_SHOP', SITE_ROOT . 'module/shop/view/');
     
     //MODEL_CONTACT
     define('MODEL_CONTACT', SITE_ROOT . 'module/contact/model/model/');

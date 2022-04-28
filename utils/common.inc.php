@@ -7,8 +7,6 @@ class common {
         require_once(VIEW_PATH_INC . 'menu.html');
         require_once(VIEW_PATH_INC . '404.html');
         require_once(VIEW_PATH_INC . 'footer.html');
-       
-
     } //end load error
 
     public static function load_view($top_page, $view) {
@@ -30,7 +28,7 @@ class common {
     public static function load_model($model, $function = null, $args = null) {
         $dir = explode('_', $model);
         $path = constant('MODEL_' . strtoupper($dir[0])) .  $model . '.class.singleton.php';
-        ///Framework_Concesionaire/module/home/model/model/home_model.class.singleton.php
+        // /Framework_Concesionaire/module/home/model/model/home_model.class.singleton.php
         if (file_exists($path)) {
             require_once ($path);
             if (method_exists($model, $function)) {

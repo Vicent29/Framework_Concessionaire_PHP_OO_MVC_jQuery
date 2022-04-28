@@ -94,7 +94,7 @@ function logout() {
         .then(function(data) {
             console.log(data);
             localStorage.removeItem('token');
-            window.location.href = "index.php?module=ctrl_home&op=list";
+            window.location.href = "?module=home&op=view";
         }).catch(function() {
             console.log('Something has occured');
         });

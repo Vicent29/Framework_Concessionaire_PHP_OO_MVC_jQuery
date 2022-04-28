@@ -948,6 +948,7 @@ a:link {
 #table-shop td {
     border-collapse: separate;
     padding-bottom: 15px;
+    font-size: 17px;
 }
 
 .hr-shop {

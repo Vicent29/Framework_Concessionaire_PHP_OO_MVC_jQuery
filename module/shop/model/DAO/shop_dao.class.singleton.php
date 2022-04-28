@@ -1,0 +1,182 @@
+<?php
+    class shop_dao {
+        static $_instance;
+
+        private function __construct() {
+        }
+
+        public static function getInstance() {
+            if(!(self::$_instance instanceof self)){
+                self::$_instance = new self();
+            }
+            return self::$_instance;
+        }
+
+        // CARS
+        public function select_all_cars($db, $total_prod, $items_page ) {
+            $sql = "SELECT *  FROM car c, model m WHERE c.model = m.id_model ORDER BY c.count DESC LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function select_one_car($db,$id) {
+            $sql = "SELECT * FROM car c, model m, type_motor t, category ca WHERE c.id_car = '$id' AND  c.model = m.id_model AND c.category = ca.id_cat AND c.motor = t.cod_tmotor";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function select_imgs_car($db,$id) {
+            $sql = "SELECT i.id_car, i.img_cars FROM img_cars i WHERE i.id_car = '$id'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function select_shop_filters($db, $total_prod, $items_page, $filtros) {
+            $sql = "SELECT c.*,m.id_brand, m.name_model, t.name_tmotor, ca.name_cat
+			FROM car c, model m, type_motor t, category ca
+			WHERE  c.model = m.id_model 
+			AND c.category = ca.id_cat
+			AND c.motor = t.cod_tmotor
+			AND $filtros
+			LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function select_filter_home($db,$total_prod, $items_page, $filter) {
+            $sql = "SELECT c.*,m.id_brand, m.name_model, t.name_tmotor, ca.name_cat FROM car c, model m, type_motor t, category ca WHERE  c.model = m.id_model AND c.category = ca.id_cat AND c.motor = t.cod_tmotor AND $filter LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        //SEARCH
+        // public function select_motor_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_brand_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_city_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_motor_brand_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_brand_city_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_motor_city_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_all_search($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        //COUNT MORE VISIT AND ALL_CARS ORDER
+        public function count_more_visit($db, $id) {
+            $sql = "UPDATE car c SET c.count = c.count+1 WHERE C.id_car = '$id'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function select_all_cars_order($db, $total_prod, $items_page, $order) {
+            $sql = "SELECT * FROM car c, model m WHERE c.model = m.id_model  ORDER BY c.$order ASC LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        //COUNT PAGINACIÓN
+        public function select_count_all($db) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_filter_home($db, $filter) {
+            $sql = "SELECT COUNT(*) AS n_prod 
+            FROM car c, model m, category ca, type_motor t 
+            WHERE c.model = m.id_model 
+            AND c.category = ca.id_cat 
+            AND c.motor = t.cod_tmotor 
+            AND $filter";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_shop_filters($db, $filtros) {
+            $sql = "SELECT COUNT(*) AS n_prod
+            FROM car c, model m, type_motor t, category ca
+            WHERE  c.model = m.id_model 
+            AND c.category = ca.id_cat
+            AND c.motor = t.cod_tmotor
+            AND $filtros";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_all_cars_order($db, $order) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, model m WHERE c.model = m.id_model ORDER BY c.$order ASC";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+        
+        //CARS RELATED
+        public function count_more_cars_related($db, $type_car) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c WHERE c.motor = '$type_car'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function select_cars_related($db, $type, $loaded, $items) {
+            $sql = "SELECT * FROM car c, model m WHERE c.model = m.id_model AND c.motor = '$type' LIMIT $loaded, $items";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        //LIKES
+        // public function select_load_likes($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function select_likes($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function like($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+
+        // public function dislike($db) {
+        //     $sql = "";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
+  
+    }
+?>
