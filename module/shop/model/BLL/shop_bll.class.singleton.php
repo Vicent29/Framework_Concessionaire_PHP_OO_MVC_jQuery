@@ -162,9 +162,53 @@
 		}
 		
 
-		// public function get_search_filter_BLL() {
-		// 	return $this -> dao -> select_data_type($this->db);
-		// }
+		public function get_search_filter_BLL($args) {
+			$total_prod = $args[0];
+			$items_page = $args[1];
+			$motor = $args[2];
+			$brand = $args[3];
+			$city = $args[4];
+			$opc_sql = $args[5];
+
+			if ($opc_sql == "select") {
+
+				if (($motor != "0") && ($brand == "0") && ($city == "0")) {
+					return $this -> dao -> select_motor_search($this->db, $total_prod, $items_page, $motor);
+				} else if (($motor == "0") && ($brand != "0") && ($city == "0")) {
+					return $this -> dao -> select_brand_search($this->db,$total_prod, $items_page, $brand);
+				} else if (($motor == "0") && ($brand == "0") && ($city != "0")) {
+					return $this -> dao -> select_city_search($this->db, $total_prod, $items_page, $city);
+				} else if (($motor != "0") && ($brand != "0") && ($city == "0")) {
+					return $this -> dao -> select_motor_brand_search($this->db, $total_prod, $items_page, $motor, $brand);
+				} else if (($motor == "0") && ($brand != "0") && ($city != "0")) {
+					return $this -> dao -> select_brand_city_search($this->db, $total_prod, $items_page, $brand, $city);
+				} else if (($motor != "0") && ($brand == "0") && ($city != "0")) {
+					return $this -> dao -> select_motor_city_search($this->db,$total_prod, $items_page, $motor, $city);
+				} else if (($motor != "0") && ($brand != "0") && ($city != "0")) {
+					return $this -> dao -> select_all_search($this->db, $total_prod, $items_page, $motor, $brand, $city);
+				} else {
+					return $this -> dao -> select_all_cars($this->db, $total_prod, $items_page);
+				}
+			}else if ($opc_sql == "count") {
+				if (($motor != "0") && ($brand == "0") && ($city == "0")) {
+					return $this -> dao -> count_motor_search($this->db, $motor);
+				} else if (($motor == "0") && ($brand != "0") && ($city == "0")) {
+					return $this -> dao -> count_brand_search($this->db, $brand);
+				} else if (($motor == "0") && ($brand == "0") && ($city != "0")) {
+					return $this -> dao -> count_city_search($this->db, $city);
+				} else if (($motor != "0") && ($brand != "0") && ($city == "0")) {
+					return $this -> dao -> count_motor_brand_search($this->db, $motor, $brand);
+				} else if (($motor == "0") && ($brand != "0") && ($city != "0")) {
+					return $this -> dao -> count_brand_city_search($this->db, $brand, $city);
+				} else if (($motor != "0") && ($brand == "0") && ($city != "0")) {
+					return $this -> dao -> count_motor_city_search($this->db, $motor, $city);
+				} else if (($motor != "0") && ($brand != "0") && ($city != "0")) {
+					return $this -> dao -> count_all_search($this->db, $motor, $brand, $city);
+				} else {
+					return $this -> dao -> select_count_all($this->db);
+				}
+			}
+		}
 
 		public function get_count_more_visit_BLL($id) {
 			return $this -> dao -> count_more_visit($this->db, $id);

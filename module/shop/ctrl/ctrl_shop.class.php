@@ -20,8 +20,8 @@
             echo json_encode(common::load_model('shop_model', 'get_home_filter',[ $_POST['args'][0], $_POST['args'][1], $_POST['args'][2], $_POST['args'][3] ]));
         }
 
-        function search_filter() {
-            echo json_encode(common::load_model('shop_model', 'get_search_filter'));
+        function operations_search_filter() {
+            echo json_encode(common::load_model('shop_model', 'get_search_filter',[ $_POST['args'][0], $_POST['args'][1], $_POST['args'][2], $_POST['args'][3], $_POST['args'][4], $_POST['args'][5]]));
         }
 
         function count_more_visit() {

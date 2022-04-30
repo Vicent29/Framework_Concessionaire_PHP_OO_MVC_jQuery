@@ -30,6 +30,6 @@
     <link href="<?php echo CSS_PATH ?>style.css" rel="stylesheet" type="text/css" />
     <!-- MIS LINKS -->
     <script type="text/javascript" src="<?php echo JS_VIEW_HOME ?>ctrl_home.js"></script>
-    <script type="text/javascript" src="<?php echo SITE_PATH ?>module/search/model/ctrl_search.js"></script>
+    <script type="text/javascript" src="<?php echo JS_VIEW_SEARCH ?>ctrl_search.js"></script>
 
 </head>

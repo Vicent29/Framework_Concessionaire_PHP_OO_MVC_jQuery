@@ -41,7 +41,7 @@
 
     <!-- MIS LINKS-Controloadors -->
     <script type="text/javascript" src="<?php echo JS_VIEW_SHOP ?>ctrl_shop.js"></script>
-    <script type="text/javascript" src="<?php echo SITE_ROOT ?>module/search/model/ctrl_search.js"></script>
+    <script type="text/javascript" src="<?php echo JS_VIEW_SEARCH ?>ctrl_search.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>translate.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>activity_user.js"></script>

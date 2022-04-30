@@ -30,7 +30,7 @@
     <script type="text/javascript" src="<?php echo JS_PATH ?>translate.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>activity_user.js"></script>
-    <script type="text/javascript" src="/Framework_Concesionaire/module/search/model/ctrl_search.js"></script>
+    <script type="text/javascript" src="<?php echo JS_VIEW_SEARCH ?>ctrl_search.js"></script>
     <script type="text/javascript" src="/Framework_Concesionaire/module/login/model/ctrl_login.js"></script>
     <script type="text/javascript" src="/Framework_Concesionaire/module/login/model/ctrl_register.js"></script>
 

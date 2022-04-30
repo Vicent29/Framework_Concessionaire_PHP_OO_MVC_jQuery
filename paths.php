@@ -37,23 +37,36 @@
     define('IMG_PATH', SITE_ROOT . 'views/img/');
 
     //MODEL_HOME
-    define('DAO_HOME', SITE_ROOT . 'module/home/model/DAO/');
-    define('BLL_HOME', SITE_ROOT . 'module/home/model/BLL/');
-    define('MODEL_HOME', SITE_ROOT . 'module/home/model/model/');
     define('JS_VIEW_HOME', SITE_PATH . 'module/home/view/js/');
+    define('MODEL_HOME', SITE_ROOT . 'module/home/model/model/');
+    define('BLL_HOME', SITE_ROOT . 'module/home/model/BLL/');
+    define('DAO_HOME', SITE_ROOT . 'module/home/model/DAO/');
     define ('VIEW_PATH_HOME', SITE_ROOT . 'module/home/view/');
 
     //MODEL_SHOP
-    define('DAO_SHOP', SITE_ROOT . 'module/shop/model/DAO/');
-    define('BLL_SHOP', SITE_ROOT . 'module/shop/model/BLL/');
-    define('MODEL_SHOP', SITE_ROOT . 'module/shop/model/model/');
     define('JS_VIEW_SHOP', SITE_PATH . 'module/shop/view/js/');
+    define('MODEL_SHOP', SITE_ROOT . 'module/shop/model/model/');
+    define('BLL_SHOP', SITE_ROOT . 'module/shop/model/BLL/');
+    define('DAO_SHOP', SITE_ROOT . 'module/shop/model/DAO/');
     define ('VIEW_PATH_SHOP', SITE_ROOT . 'module/shop/view/');
+
+    //MODEL_SEARCH
+    define('JS_VIEW_SEARCH', SITE_PATH . 'module/search/view/js/');
+    define('MODEL_SEARCH', SITE_ROOT . 'module/search/model/model/');
+    define('BLL_SEARCH', SITE_ROOT . 'module/search/model/BLL/');
+    define('DAO_SEARCH', SITE_ROOT . 'module/search/model/DAO/');
     
     //MODEL_CONTACT
-    define('MODEL_CONTACT', SITE_ROOT . 'module/contact/model/model/');
     define('JS_VIEW_CONTACT', SITE_PATH . 'module/contact/view/js/');
+    define('MODEL_CONTACT', SITE_ROOT . 'module/contact/model/model/');
     define ('VIEW_PATH_CONTACT', SITE_ROOT . 'module/contact/view/');
+
+    //MODEL_EXCEPTIONS
+    // define('JS_VIEW_ERROR', SITE_PATH . 'module/exceptions/view/js/');
+    // define('MODEL_ERROR', SITE_ROOT . 'module/exceptions/model/model/');
+    // define('BLL_ERROR', SITE_ROOT . 'module/exceptions/model/BLL/');
+    // define('DAO_ERROR', SITE_ROOT . 'module/exceptions/model/DAO/');
+    // define ('VIEW_PATH_ERROR', SITE_ROOT . 'module/exceptions/view/');
     
     // Friendly
     define('URL_FRIENDLY', TRUE);

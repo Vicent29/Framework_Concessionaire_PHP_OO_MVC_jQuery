@@ -30,8 +30,8 @@
             return $this -> bll -> get_home_filter_BLL($args);
         }
 
-        public function get_search_filter() {
-            return $this -> bll -> get_search_filter_BLL();
+        public function get_search_filter($args) {
+            return $this -> bll -> get_search_filter_BLL($args);
         }
 
         public function get_count_more_visit($args) {

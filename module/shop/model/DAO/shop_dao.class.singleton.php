@@ -49,48 +49,140 @@
             return $db->listar($stmt);
         }
 
-        //SEARCH
-        // public function select_motor_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        //SELECT SEARCH
+        public function select_motor_search($db, $total_prod, $items_page, $motor) {
+            $sql = "SELECT * FROM car c, type_motor t ,model m
+			        WHERE c.motor = t.cod_tmotor
+			        AND c.model = m.id_model
+			        AND t.cod_tmotor= '$motor'
+                    LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
 
-        // public function select_brand_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        public function select_brand_search($db, $total_prod, $items_page, $brand) {
+            $sql = "SELECT * FROM car c,model m
+                    WHERE c.model = m.id_model
+                    AND m.id_brand= '$brand'
+                    LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
 
-        // public function select_city_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        public function select_city_search($db, $total_prod, $items_page, $city) {
+            $sql = "SELECT * FROM car c, model m WHERE c.model = m.id_model AND c.city= '$city' LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
 
-        // public function select_motor_brand_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        public function select_motor_brand_search($db, $total_prod, $items_page, $motor, $brand) {
+            $sql = "SELECT * FROM car c, type_motor t, model m
+                    WHERE c.model = m.id_model
+                    AND c.motor = t.cod_tmotor
+                    AND t.cod_tmotor = '$motor'
+                    AND m.id_brand = '$brand'
+                    LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
 
-        // public function select_brand_city_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        public function select_brand_city_search($db, $total_prod, $items_page, $brand, $city) {
+            $sql = "SELECT * FROM car c, model m
+                    WHERE c.model = m.id_model	
+                    AND m.id_brand= '$brand'
+                    AND c.city= '$city'
+                    LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
 
-        // public function select_motor_city_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        public function select_motor_city_search($db, $total_prod, $items_page, $motor, $city) {
+            $sql = "SELECT * FROM car c, type_motor t ,model m
+                    WHERE c.motor = t.cod_tmotor
+                    AND c.model = m.id_model
+                    AND t.cod_tmotor= '$motor'
+                    AND c.city= '$city'
+                    LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
 
-        // public function select_all_search($db) {
-        //     $sql = "";
-        //     $stmt = $db->ejecutar($sql);
-        //     return $db->listar($stmt);
-        // }
+        public function select_all_search($db, $total_prod, $items_page, $motor, $brand, $city) {
+            $sql = "SELECT * FROM car c, type_motor t ,model m
+                    WHERE c.motor = t.cod_tmotor
+                    AND c.model = m.id_model
+                    AND t.cod_tmotor= '$motor'
+                    AND m.id_brand= '$brand'
+                    AND c.city= '$city'
+                    LIMIT $total_prod, $items_page";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        // COUNT SEARCH PAGINATION
+        public function count_motor_search($db, $motor) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, type_motor t ,model m
+			        WHERE c.motor = t.cod_tmotor
+			        AND c.model = m.id_model
+			        AND t.cod_tmotor= '$motor'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_brand_search($db, $brand) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c,model m
+                    WHERE c.model = m.id_model
+                    AND m.id_brand= '$brand'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_city_search($db, $city) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, model m WHERE c.model = m.id_model AND c.city= '$city'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_motor_brand_search($db, $motor, $brand) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, type_motor t, model m
+                    WHERE c.model = m.id_model
+                    AND c.motor = t.cod_tmotor
+                    AND t.cod_tmotor = '$motor'
+                    AND m.id_brand = '$brand'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_brand_city_search($db, $brand, $city) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, model m
+                    WHERE c.model = m.id_model	
+                    AND m.id_brand= '$brand'
+                    AND c.city= '$city'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_motor_city_search($db, $motor, $city) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, type_motor t ,model m
+                    WHERE c.motor = t.cod_tmotor
+                    AND c.model = m.id_model
+                    AND t.cod_tmotor= '$motor'
+                    AND c.city= '$city'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function count_all_search($db, $motor, $brand, $city) {
+            $sql = "SELECT COUNT(*) AS n_prod FROM car c, type_motor t ,model m
+                    WHERE c.motor = t.cod_tmotor
+                    AND c.model = m.id_model
+                    AND t.cod_tmotor= '$motor'
+                    AND m.id_brand= '$brand'
+                    AND c.city= '$city'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
 
         //COUNT MORE VISIT AND ALL_CARS ORDER
         public function count_more_visit($db, $id) {

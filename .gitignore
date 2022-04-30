@@ -1,4 +1,5 @@
 model/jwt.ini
 model/mailgun.ini
 model/db.ini
-*.htacces
+**.ini
+.htacces

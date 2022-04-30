@@ -85,7 +85,7 @@ function loadCars(total_prod = 0, items_page = 4) {
     } else if (motor_filter != false) {
         load_motor_filter(total_prod, items_page);
     } else if (verificate_search != false) {
-        load_search();
+        load_search(total_prod, items_page);
     } else if (verificate_orderBy != false) {
         load_orderby(total_prod, items_page);
         highlightOrderBy();
@@ -465,60 +465,15 @@ function load_motor_filter(total_prod = 0, items_page) {
     ajaxForSearch('?module=shop&op=home_filter', atributos);
 }
 
-function load_search() {
+function load_search(total_prod = 0, items_page) {
+
     var search = JSON.parse(localStorage.getItem('search'));
-    ajaxPromise('?module=shop&op=search_filter', 'POST', 'JSON', { 'search': search })
-        .then(function(data) {
-            console.log(data);
-            $('#content_shop_cars').empty();
-            $('.date_car' && '.date_img').empty();
-            $('#div_map_details').hide();
-
-            //Mejora para que cuando no hayan resultados en los filtros aplicados
-            if (data == "error") {
-                $('<div></div>').appendTo('#content_shop_cars')
-                    .html(
-                        '<h3>¡No se encuentarn resultados con los filtros aplicados!</h3>'
-                    )
-            } else {
-                load_map_shop();
-                for (row in data) {
-
-                    $('<div></div>').attr({ 'id': data[row].id_car, class: 'list_content_shop' }).appendTo('#content_shop_cars')
-                        .html(
-                            "<div class='list_product'>" +
-                            "<div class='img-container'>" +
-                            "<img src= '" + data[row].img_car + "'" + "</img>" +
-                            "</div>" +
-                            "<div class='product-info'>" +
-                            "<div class='product-content'>" +
-                            "<h1><b>" + data[row].id_brand + " " + data[row].name_model + "<a class='list__heart' id='" + data[row].id_car + "'><i id= " + data[row].id_car + " class='fa-solid fa-heart fa-lg'></i></a>" + "</b></h1>" +
-                            "<p>Up-to-date maintenance and revisions</p>" +
-                            "<ul>" +
-                            "<li> <i id='col-ico' class='fa-solid fa-road fa-xl'></i>&nbsp;&nbsp;" + data[row].Km + " KM" + "</li>" +
-                            "<li> <i id='col-ico' class='fa-solid fa-person fa-xl'></i>&nbsp;&nbsp;&nbsp;" + data[row].gear_shift + "</li>" +
-                            "<li> <i id='col-ico' class='fa-solid fa-palette fa-xl'></i>&nbsp;" + data[row].color + "</li>" +
-                            "</ul>" +
-                            "<div class='buttons'>" +
-                            "<a class='button add' href='#'>Add to Cart</a>" +
-                            "<a class='button buy' href='#'>Buy</a>" +
-                            "<span class='button' id='price'>" + data[row].price + '€' + "</span>" +
-                            "</div>" +
-                            "</div>" +
-                            "</div>" +
-                            "</div>"
-                        )
-                    addMarker_map(data[row], "list");
-                    load_likes_user();
-
-                }
-
-            }
-
-        }).catch(function() {
-            console.log("Error ajax Load_search");
-            // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
-        });
+    var type_car = search[1]['type_car'];
+    var brand_car = search[2]['brand_car'];
+    var city = search[0]['city'];
+    var opc_sql = "select";
+    const atributos= [total_prod, items_page, type_car, brand_car, city, opc_sql];
+    ajaxForSearch('?module=shop&op=operations_search_filter', atributos);
 }
 
 function save_orderby() {
@@ -587,10 +542,17 @@ function load_pagination() {
         var args = [opc_filter, motor];
 
     } else if (localStorage.getItem('search')) {
-        console.log("Paginación search");
+        var search = JSON.parse(localStorage.getItem('search'));
+        var type_car = search[1]['type_car'];
+        var brand_car = search[2]['brand_car'];
+        var city = search[0]['city'];
+        var opc_sql = "count";
+        var total_prod= "0";
+        var items_page= "4";
+        var args= [total_prod, items_page, type_car, brand_car, city, opc_sql];
+        var url = "?module=shop&op=operations_search_filter";
 
     } else if (localStorage.getItem('order')) {
-        console.log(localStorage.getItem('order'));
         var value_orderby = JSON.parse(localStorage.getItem('order'));
         var url = '?module=shop&op=count_order_filter';
         var args = { 'value_orderby': value_orderby }

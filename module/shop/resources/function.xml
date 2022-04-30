@@ -20,8 +20,8 @@
         <uri>home_filter</uri>
     </function>
      <function>
-        <name>search_filter</name>
-        <uri>search_filter</uri>
+        <name>operations_search_filter</name>
+        <uri>operations_search_filter</uri>
     </function>
      <function>
         <name>count_more_visit</name>
