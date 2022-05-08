@@ -1,24 +1,19 @@
 function register() {
     if (validate_register() != 0) {
         var data = $('#register__form').serialize();
-        console.log(data);
 
-        ajaxPromise('module/login/ctrl/ctrl_login.php?op=register', 'POST', 'JSON', data)
+        ajaxPromise('?module=login&op=register', 'POST', 'JSON', data)
             .then(function(result) {
-                console.log(result);
                 if (result == "error_email") {
                     document.getElementById('error_email_reg').innerHTML = "El email ya esta en uso, asegurate de no tener ya una cuenta"
                 } else if (result == "error_user") {
                     document.getElementById('error_username_reg').innerHTML = "El usuario ya esta en uso, intentalo con otro"
                 } else {
-                    console.log("se ha registrado correctamente");
                     toastr.success("Registery succesfully");
-                    setTimeout(' window.location.href = "index.php?module=ctrl_login&op=login-register_view"; ', 1000);
+                    setTimeout(' window.location.href = "?module=login&op=login_register_view"; ', 1000);
                 }
             }).catch(function(textStatus) {
-                if (console && console.log) {
-                    console.log("La solicitud ha fallado: " + textStatus);
-                }
+               console.log("La solicitud ha fallado: " + textStatus); 
             });
     }
 }
@@ -36,8 +31,7 @@ function key_register() {
 
 function button_register() {
     $('#register').on('click', function(e) {
-        // parar js
-        e.preventDefault();
+        e.preventDefault(); //para js
         register();
     });
 }

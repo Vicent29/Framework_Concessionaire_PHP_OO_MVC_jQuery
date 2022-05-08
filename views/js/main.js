@@ -36,7 +36,7 @@ function friendlyURL(url) {
             link += "/" + aux[1];
         }
     }
-    // return "http://localhost/Framework_Concesionaire" + link;
+    //  http://localhost/Framework_Concesionaire/contact/send_email_contact/
     return window.location.origin + "/Framework_Concesionaire" + link;
 }
 
@@ -44,22 +44,23 @@ function friendlyURL(url) {
 function load_menu() {
     var token = localStorage.getItem('token');
     if (token) {
-        ajaxPromise('module/login/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'token': token })
+        ajaxPromise('?module=login&op=data_user', 'POST', 'JSON', { 'token': token })
             .then(function(data) {
                 if (data.type_user == "client") {
                     console.log("Client loged");
                     $('.opc_exceptions').empty();
                 } else {
                     console.log("Admin loged");
-                    $('.opc_exceptions').show();
+                    $('.opc_exceptions').empty();
+                    // $('.opc_exceptions').show();
                 }
                 $('.log-icon').empty();
                 $('#user_info').empty();
-                $('<img src="' + data.avatar + '"alt="Robot">').appendTo('.log-icon');
+                $('<img src="' + data[0].avatar + '"alt="Robot">').appendTo('.log-icon');
                 $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
                     .html(
                         '<a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>' +
-                        '<a>' + data.username + '<a/>'
+                        '<a>' + data[0].username + '<a/>'
 
                     )
 
@@ -71,14 +72,14 @@ function load_menu() {
         $('.opc_exceptions').empty();
         $('#user_info').hide();
         $('.log-icon').empty();
-        $('<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
+        $('<a href="?module=login&op=login_register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
 
 
     }
 }
 
 
-//================CLICK-LOGIUT================
+//================CLICK-LOGOUT================
 function click_logout() {
     $(document).on('click', '#logout', function() {
         localStorage.removeItem('total_prod');
@@ -89,12 +90,15 @@ function click_logout() {
 
 //================LOG-OUT================
 function logout() {
-
-    ajaxPromise('module/login/ctrl/ctrl_login.php?op=logout', 'POST', 'JSON')
+    ajaxPromise('?module=login&op=logout', 'POST', 'JSON')
         .then(function(data) {
-            console.log(data);
-            localStorage.removeItem('token');
-            window.location.href = "?module=home&op=view";
+            if (data == "Done") {
+                localStorage.removeItem('token');
+                window.location.href = "?module=home&op=view";
+            }else {
+                console.log("Error logout main.js");
+            }
+          
         }).catch(function() {
             console.log('Something has occured');
         });

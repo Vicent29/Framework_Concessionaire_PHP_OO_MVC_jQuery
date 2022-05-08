@@ -55,11 +55,20 @@
     define('MODEL_SEARCH', SITE_ROOT . 'module/search/model/model/');
     define('BLL_SEARCH', SITE_ROOT . 'module/search/model/BLL/');
     define('DAO_SEARCH', SITE_ROOT . 'module/search/model/DAO/');
+
     
     //MODEL_CONTACT
     define('JS_VIEW_CONTACT', SITE_PATH . 'module/contact/view/js/');
     define('MODEL_CONTACT', SITE_ROOT . 'module/contact/model/model/');
     define ('VIEW_PATH_CONTACT', SITE_ROOT . 'module/contact/view/');
+
+    //MODEL_LOGIN
+    define('JS_VIEW_LOGIN', SITE_PATH . 'module/login/view/js/');
+    define('MODEL_LOGIN', SITE_ROOT . 'module/login/model/model/');
+    define('BLL_LOGIN', SITE_ROOT . 'module/login/model/BLL/');
+    define('DAO_LOGIN', SITE_ROOT . 'module/login/model/DAO/');
+    define ('VIEW_PATH_LOGIN', SITE_ROOT . 'module/login/view/');
+    define('CSS_LOGIN', 'module/login/view/css/');
 
     //MODEL_EXCEPTIONS
     // define('JS_VIEW_ERROR', SITE_PATH . 'module/exceptions/view/js/');

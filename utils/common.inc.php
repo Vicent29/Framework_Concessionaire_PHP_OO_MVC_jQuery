@@ -43,7 +43,7 @@ class common {
     }//end_laod_model
 
 
-    function friendlyURL($url) {
+  public static function friendlyURL($url) {
         $link = "";
         if (URL_FRIENDLY) {
             $url = explode("&", str_replace("?", "", $url));

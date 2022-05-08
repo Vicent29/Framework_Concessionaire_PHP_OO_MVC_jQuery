@@ -1,4 +1,7 @@
 <?php
+ if (isset($_SESSION["tiempo"])) {  
+    $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+}
     class ctrl_home {
         function view() {
             common::load_view('top_page_home.php', VIEW_PATH_HOME . 'home.html');

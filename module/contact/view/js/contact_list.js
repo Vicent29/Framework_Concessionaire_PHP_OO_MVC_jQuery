@@ -46,8 +46,7 @@ function check_email() {
 }
 
 function send_email(content_email) {
-    // ajaxPromise(friendlyURL('?module=contact&op=send_email_contact'), 'POST', 'JSON', content_email)
-    ajaxPromise('?module=contact&op=send_email_contact', 'POST', 'JSON', content_email)
+    ajaxPromise(friendlyURL('?module=contact&op=send_email_contact'), 'POST', 'JSON', content_email)
         .then(function (data) {
             toastr.success('Email sended');
             setTimeout('location.reload()', 1500);

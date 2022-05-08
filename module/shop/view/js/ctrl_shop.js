@@ -466,7 +466,7 @@ function load_motor_filter(total_prod = 0, items_page) {
 }
 
 function load_search(total_prod = 0, items_page) {
-
+    localStorage.removeItem('page');
     var search = JSON.parse(localStorage.getItem('search'));
     var type_car = search[1]['type_car'];
     var brand_car = search[2]['brand_car'];
@@ -685,6 +685,8 @@ function click_like(id_car, lugar) {
     if (token) {
         ajaxPromise("?module=shop&op=control_likes", 'POST', 'JSON', { 'id_car': id_car, 'token': token })
             .then(function(data) {
+                // console.log("RESPUESTAA");
+                // console.log(data);
                 $("#" + id_car + ".fa-heart").toggleClass('like_red');
             }).catch(function() {
                 console.log("Error Function click_like SHOP");
@@ -699,7 +701,7 @@ function click_like(id_car, lugar) {
         localStorage.setItem('id_car', id_car);
 
         toastr.warning("Debes de iniciar session");
-        setTimeout("location.href = 'index.php?module=ctrl_login&op=login-register_view';", 1000);
+        setTimeout("location.href = '?module=login&op=login_register_view';", 1000);
     }
 }
 

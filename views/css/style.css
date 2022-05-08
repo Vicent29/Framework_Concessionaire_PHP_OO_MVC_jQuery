@@ -397,7 +397,9 @@ small {
     color: #808080;
     text-align: center;
 }
-
+#footer-sec svg {
+    color: #2e93e6;
+}
 #footer-sec h4 {
     text-transform: uppercase;
     color: #fff;

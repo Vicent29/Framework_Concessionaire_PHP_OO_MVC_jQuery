@@ -1,4 +1,8 @@
 <?php
+ if (isset($_SESSION["tiempo"])) {  
+    $_SESSION["tiempo"] = time();
+}
+
 class ctrl_contact
 {
 	function view()

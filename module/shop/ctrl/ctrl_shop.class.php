@@ -1,4 +1,8 @@
 <?php
+ if (isset($_SESSION["tiempo"])) {  
+    $_SESSION["tiempo"] = time();
+}
+
     class ctrl_shop {
         function list() {
             common::load_view('top_page_shop.php', VIEW_PATH_SHOP . 'shop.html');
@@ -52,12 +56,12 @@
             echo json_encode(common::load_model('shop_model', 'get_cars_related', [$_POST['type'],$_POST['loaded'],$_POST['items']]));
         }
 
-        // function control_likes() {
-        //     echo json_encode(common::load_model('shop_model', 'get_control_likes'));
-        // }
+        function control_likes() {
+            echo json_encode(common::load_model('shop_model', 'get_control_likes',[$_POST['id_car'], $_POST['token']]));
+        }
 
-        // function load_likes_user() {
-        //     echo json_encode(common::load_model('shop_model', 'get_load_likes_user'));
-        // }
+        function load_likes_user() {
+            echo json_encode(common::load_model('shop_model', 'get_load_likes_user', $_POST['token']));
+        }
     }
 ?>

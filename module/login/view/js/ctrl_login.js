@@ -1,7 +1,7 @@
 function login() {
     if (validate_login() != 0) {
         var data = $('#login__form').serialize();
-        ajaxPromise('module/login/ctrl/ctrl_login.php?op=login', 'POST', 'JSON', data)
+        ajaxPromise('?module=login&op=login', 'POST', 'JSON', data)
             .then(function(result) {
                 if (result == "error_user") {
                     document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
@@ -12,9 +12,9 @@ function login() {
                     toastr.success("Loged succesfully");
 
                     if (localStorage.getItem('redirect_like')) {
-                        setTimeout(' window.location.href = "index.php?module=ctrl_shop&op=list"; ', 1000);
+                        setTimeout(' window.location.href = "?module=shop&op=list"; ', 1000);
                     } else {
-                        setTimeout(' window.location.href = "index.php?module=ctrl_home&op=list"; ', 1000);
+                        setTimeout(' window.location.href = "?module=home&op=view"; ', 1000);
                     }
                 }
             }).catch(function(textStatus) {

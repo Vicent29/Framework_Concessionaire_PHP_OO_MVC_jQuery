@@ -240,13 +240,25 @@
 			return $this -> dao -> select_cars_related($this->db,$args[0],$args[1],$args[2]);
 		}
 
-		// public function get_control_likes_BLL() {
-		// 	return $this -> dao -> select_data_type($this->db);
-		// }
+		public function get_control_likes_BLL($args) {
+			$id_car = $args[0];
+			$token = $args[1];
 
-		// public function get_load_likes_user_BLL() {
-		// 	return $this -> dao -> select_data_type($this->db);
-		// }
+			$username=  middleware::descode_token($token)['username'];
+			$rdo = $this -> dao -> select_likes($this->db, $id_car, $username);
+				if (count($rdo) === 0) {
+					$rdo = $this -> dao -> like($this->db, $id_car, $username);
+					 return "0";
+				} else {
+					$rdo = $this -> dao -> dislike($this->db, $id_car, $username);
+					return "1";
+				}
+		}
+
+		public function get_load_likes_user_BLL($token) {
+			$username=  middleware::descode_token($token)['username'];
+			return $this -> dao -> select_load_likes($this->db, $username);
+		}
 
 
 	}

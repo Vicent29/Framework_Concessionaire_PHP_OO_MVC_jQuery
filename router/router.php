@@ -1,8 +1,8 @@
 <?php
     require_once('autoload.php');
 
-    ob_start();
-    session_start();
+    // ob_start();
+    @session_start();
 
     class router {
         private $uriModule;
