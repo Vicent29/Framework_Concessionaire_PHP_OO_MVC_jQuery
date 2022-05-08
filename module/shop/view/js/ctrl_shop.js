@@ -5,10 +5,12 @@ function ajaxForSearch(durl, args) {
     } else {
         if (localStorage.getItem('total_prod')) {
             total_prod = localStorage.getItem('total_prod');
+            args[0]= total_prod;
         } else {
             total_prod = 0;
         }
     }
+
     ajaxPromise(durl, 'POST', 'JSON', {'args': args})
         .then(function(data) {
             $('#content_shop_cars').empty();
@@ -55,7 +57,7 @@ function ajaxForSearch(durl, args) {
                 //Mejora para que redireccione al div del coche en el que e has dado like antes de estar registrado en el shop.
                 if (localStorage.getItem('id_car')) {
                     var id = "#" + localStorage.getItem('id_car');
-                    $("html, body").animate({ scrollTop: $(id).offset().top }, 1000);
+                    $("html, body").animate({ scrollTop: $(id).offset().top -116}, 1000);
                 }
             }
 
@@ -685,8 +687,6 @@ function click_like(id_car, lugar) {
     if (token) {
         ajaxPromise("?module=shop&op=control_likes", 'POST', 'JSON', { 'id_car': id_car, 'token': token })
             .then(function(data) {
-                // console.log("RESPUESTAA");
-                // console.log(data);
                 $("#" + id_car + ".fa-heart").toggleClass('like_red');
             }).catch(function() {
                 console.log("Error Function click_like SHOP");
