@@ -29,9 +29,21 @@
 				$hashed_pass = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
             	$hashavatar = md5(strtolower(trim($email))); 
             	$avatar = "https://i.pravatar.cc/500?u=$hashavatar";
-				$rdo=  $this -> dao -> insert_user($this->db, $useraname, $hashed_pass, $email, $avatar);
+				$email_token = common::generate_Token_secure(20);
+				$id_user = common::generate_Token_secure(6);
+				$rdo=  $this -> dao -> insert_user($this->db, $id_user, $useraname, $hashed_pass, $email, $email_token, $avatar);
 				if($rdo){
-					return "ok";
+					$message = [
+						'type' => 'validate',
+						'token' => $email_token, 
+						'toEmail' => $email
+					];
+					$email = json_decode(mail::send_email($message), true);
+					if ($email) {
+						return "ok";
+					}  
+
+					
 				}
 			}elseif ($exist_user_email) {
 				return "error_email";
@@ -39,6 +51,16 @@
 				return "error_user";
 			}
 			
+		}
+
+		public function get_verify_email_BLL($token_email) {
+			$veryfy_email= $this -> dao -> select_verify_email($this->db, $token_email);
+			if ($veryfy_email[0]['active'] == "0") {
+				$update_active = $this -> dao -> update_active_email($this->db, $token_email);
+				return "Vrification_ok";
+			}else {
+				return "Vrification_ok";
+			}
 		}
 
 		public function get_login_BLL($args) {

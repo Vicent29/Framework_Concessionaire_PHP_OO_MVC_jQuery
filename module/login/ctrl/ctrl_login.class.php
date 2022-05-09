@@ -9,6 +9,10 @@
             echo json_encode(common::load_model('login_model', 'get_register', [ $_POST['username_reg'], $_POST['passwd1_reg'], $_POST['email_reg'] ]));
         }
 
+        function verify_email() {
+            echo json_encode(common::load_model('login_model', 'get_verify_email', $_POST['token_email']));
+        }
+
         function login() {
             echo json_encode(common::load_model('login_model', 'get_login',[ $_POST['username_log'], $_POST['passwd_log'] ]));
         }

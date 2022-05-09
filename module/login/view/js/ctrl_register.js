@@ -14,7 +14,7 @@ function register() {
                 }
             }).catch(function(textStatus) {
                console.log("La solicitud ha fallado: " + textStatus); 
-            });
+             });
     }
 }
 

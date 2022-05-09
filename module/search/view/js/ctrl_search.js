@@ -56,11 +56,8 @@ function autocomplete() {
         sdata.type_car = $('#type_car').val();
         sdata.brand_car = $('#brand_car').val();
 
-        console.log(sdata);
-
         ajaxPromise('?module=search&op=autocomplete', 'POST', 'JSON', sdata)
             .then(function(data) {
-                console.log(data);
                 $('#search_auto').empty();
                 $('#search_auto').fadeIn(10000000);
                 for (row in data) {

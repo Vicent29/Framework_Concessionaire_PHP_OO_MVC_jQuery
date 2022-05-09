@@ -69,7 +69,30 @@ function validate_login() {
     }
 }
 
+// ---------------LOAD-CONTENT-----------
+function load_content() {
+    let path = window.location.search.split('&');
+    console.log(path);
+    if(path[2] === 'verify'){
+        console.log("verifyyy");
+        ajaxPromise('?module=login&op=verify_email', 'POST', 'JSON', {token_email: path[3]})
+        .then(function(data) {
+            console.log("REESULTADO");
+            console.log(data);
+            // window.location.href = friendlyURL("?module=home&op=view");
+        });
+        // .catch(function() {
+        //   console.log('Error: verify email error');
+        // });
+        
+    }
+    // else if (path[2] === 'recover') {
+       // load_form_new_password(path[4]);
+    // }
+}
+
 $(document).ready(function() {
     key_login();
     button_login();
+    load_content();
 });

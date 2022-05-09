@@ -31,5 +31,6 @@
     <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>activity_user.js"></script>
     <script type="text/javascript" src="<?php echo JS_VIEW_SEARCH ?>ctrl_search.js"></script>
+    <script type="text/javascript" src="<?php echo JS_VIEW_LOGIN ?>ctrl_login.js"></script>
 
 </head>

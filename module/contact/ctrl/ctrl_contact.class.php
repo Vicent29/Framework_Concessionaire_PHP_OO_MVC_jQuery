@@ -10,8 +10,7 @@ class ctrl_contact
 		common::load_view('top_page_contact.php', VIEW_PATH_CONTACT . 'contact_list.html');
 	}
 
-	function send_email_contact()
-	{
+	function send_email_contact(){
 		$message = [
 			'type' => 'contact',
 			'inputName' => $_POST['name'],
@@ -27,6 +26,5 @@ class ctrl_contact
 		}else {
 			echo json_encode('Error!');
 		}
-
 	}
 }

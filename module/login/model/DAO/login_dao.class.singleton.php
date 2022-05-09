@@ -18,9 +18,20 @@
             return $db->listar($stmt);
         }
 
-        public function insert_user($db, $username, $hashed_pass, $email, $avatar ) {
-            $sql = "INSERT INTO `users`(`username`, `password`, `email`, `type_user`, `avatar`) 
-                    VALUES ('$username','$hashed_pass','$email','client','$avatar')";
+        public function select_verify_email($db, $token_email) {
+            $sql = "SELECT active FROM users WHERE email_token='$token_email'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
+        public function  update_active_email($db, $token_email) {
+            $sql = "UPDATE users SET active = 1 WHERE email_token = '$token_email'";
+            return $db->ejecutar($sql);
+        }
+
+        public function insert_user($db, $id_user, $username, $hashed_pass, $email,$email_token, $avatar ) {
+            $sql = "INSERT INTO `users`(`id_user`,`username`, `password`, `email`,`email_token`, `type_user`, `avatar`) 
+                    VALUES ('$id_user','$username','$hashed_pass','$email','$email_token','client','$avatar')";
             return $db->ejecutar($sql);
         }
 
