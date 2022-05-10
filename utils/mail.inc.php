@@ -16,8 +16,9 @@
                 case 'recover';
                     $e_values['toEmail'] = 'vicentesteve2002@gmail.com';
                     $e_values['inputEmail'] = 'vicentesteve2002@gmail.com';
-                    $email['inputMatter'] = 'Recover password';
-                    $email['inputMessage'] = "<a href='http://localhost/Framework_Concesionaire/?module=login&op=login_register_view&recover&$e_values[token]'>Click here for recover your password.</a>";
+                    $e_values['fromEmail'] = 'vicentesteve2002@gmail.com';
+                    $e_values['inputMatter'] = 'Recover password';
+                    $e_values['inputMessage'] = "<a href='http://localhost/Framework_Concesionaire/?module=login&op=login_register_view&recover&$e_values[token]'>Click here for recover your password.</a>";
                     break; 
             }
             return self::send_mailgun($e_values);

@@ -37,10 +37,11 @@ a {
     max-width: 525px;
     min-height: 690px;
     position: relative;
+    background-color: black;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
 
-.login-html {
+.login-html, .login-form {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -194,6 +195,10 @@ a {
     text-align: center;
 }
 
+label.recover_passwd:hover{
+    color: orange;
+}
+
 #footer-sec {
     text-align: center;
 }
@@ -208,4 +213,69 @@ a {
 
 #wrapper {
     background-color: rgb(163, 163, 163);
+}
+
+/* recover password */
+
+.recover-email-html, .recover-passwd-html{
+    min-height: 450px;
+    margin-top: -1%;
+    margin-bottom: 2%;
+}
+.recover-form hr, .recover-form-email hr{ 
+    color: #1161ee;
+    border: #1161ee solid 1px;
+    width: 90%;
+    margin-bottom: 50px;
+}
+.recover-form, .recover-form-email{
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    width: 500px;
+    height:min-content;
+}
+.recover-form h2, .recover-form-email h2 {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 5%;
+    font-size: 25px;
+}
+.recover-form .group, .recover-form-email .group {
+    margin-bottom: 40px;
+}
+.recover-form label, .recover-form-email label{ 
+    text-align: center;
+    font-size: 18px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.recover-form input, .recover-form-email input { 
+    text-align: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    min-width: 80%;
+    min-height: 40px;
+    background-color: #333;
+    border-radius: 25px;
+}
+.recover-form span, .recover-form-email span {
+    margin-left: 11%;
+}
+#send_recover, #change_passwd {
+    background: #1161ee;
+    align-items: center;
+    width: 25%;
+    height: 40px;
+    font-weight: bolder;
+    font-size: 18px;
+    border-radius: 20px;
+    margin-bottom: 3%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.button__recover {
+    margin-top: -20px;
 }

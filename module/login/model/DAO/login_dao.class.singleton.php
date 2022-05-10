@@ -25,7 +25,7 @@
         }
 
         public function  update_active_email($db, $token_email) {
-            $sql = "UPDATE users SET active = 1 WHERE email_token = '$token_email'";
+            $sql = "UPDATE users SET active = '1' WHERE email_token = '$token_email'";
             return $db->ejecutar($sql);
         }
 
@@ -34,9 +34,26 @@
                     VALUES ('$id_user','$username','$hashed_pass','$email','$email_token','client','$avatar')";
             return $db->ejecutar($sql);
         }
+        public function update_recover_password($db, $email, $token_email) {
+            $sql = $sql = "UPDATE `users` SET `email_token`= '$token_email', `active`= '0' WHERE `email` = '$email'";
+            $stmt = $db->ejecutar($sql);
+            return "ok_update";
+        }
+
+        public function  select_old_passwd_email_token($db, $email_token) {
+            $sql = "SELECT `password` FROM `users` WHERE email_token='$email_token'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        } 
+
+        public function update_new_passwd_email($db, $email_token, $new_passwd) {
+            $sql = $sql = "UPDATE `users` SET `password`= '$new_passwd', `active`= '1' WHERE `email_token` = '$email_token'";
+            $stmt = $db->ejecutar($sql);
+            return "ok_update";
+        }
 
         public function select_user($db, $username) {
-            $sql = "SELECT `username`, `password`, `email`, `type_user`, `avatar` FROM `users` WHERE username='$username'";
+            $sql = "SELECT * FROM `users` WHERE username='$username'";
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);
         }

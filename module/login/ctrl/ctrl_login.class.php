@@ -17,6 +17,19 @@
             echo json_encode(common::load_model('login_model', 'get_login',[ $_POST['username_log'], $_POST['passwd_log'] ]));
         }
 
+        function send_recover_email() {
+            echo json_encode(common::load_model('login_model', 'get_send_recover_email', $_POST['email_rec']));
+        }
+
+        
+        function verify_email_token() {
+            echo json_encode(common::load_model('login_model', 'get_verify_email_token', $_POST['email_token']));
+        }
+
+        function send_new_passwd() {
+            echo json_encode(common::load_model('login_model', 'get_send_new_passwd', [$_POST['email_token'], $_POST['old_passwd'], $_POST['new_passwd']]));
+        }
+
         function logout() {
             echo json_encode(common::load_model('login_model', 'get_logout'));
         }

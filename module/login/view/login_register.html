@@ -23,9 +23,20 @@
                             <div class="group">
                                 <input type="submit" id="login" class="button" value="Sign In">
                             </div>
+                            <div class="social_login">
+                                <div class="google_login" id="google">
+                                    <img class="google_img"/>
+                                    <h4 class="google_title">Google</h4>
+                                </div>
+                                <div class="github_login" id="github">
+                                    <img class="github_img"/>
+                                    <h4 class="github_title">Git Hub</h4>
+                                </div>
+                            </div>
                             <div class="hr"></div>
                             <div class="foot-lnk">
-                                <label for="tab-2">You don't have an account? </label>
+                                <label for="tab-2">You don't have an account?   | </label>
+                                <label class="recover_passwd" id="recover_passwd">  Forgot password?</label>
                             </div>
                         </div>
                     </form>
@@ -65,5 +76,49 @@
                 </div>
             </div>
         </div>
+        <!-- RECOVER PASSWORD- EMAIL-->
+        <div class="recover-email-html">
+            <br>
+            <div class="recover-form-email">
+                <h2><b>RECOVER PASSWORD</b></h2>
+                <hr>
+                <form id="rec_passwd_email" method="post"> 
+                    <div class="group">
+                        <label>EMAIL</label><br>
+                        <input id="email_rec" type="email" class="input" name="email_rec">
+                        <span id="error_email_rec" class="error"></span>
+                    </div>
+                </form>
+                <br/>
+                <div class="button__recover">
+                    <button type="button" name="send_recover" id="send_recover">SEND EMAIL</button>
+                </div>
+            </div><br><br><br><br>
+        </div>
+        <!-- RECOVER PASSWORD -->
+        <div class="recover-passwd-html">
+            <br>
+            <div class="recover-form">
+                <h2><b>RECOVER PASSWORD</b></h2>
+                <hr>
+                <form id="recover-passwd" method="post">
+                    <div class="group">
+                        <label>OLD PASSWORD</label><br>
+                        <input id="old_passwd" type="password" class="input" name="old_passwd">
+                        <span id="error_old_passwd" class="error"></span>
+                    </div>
+                    <div class="group">
+                        <label>NEW PASSWORD</label><br>
+                        <input id="new_passwd" type="password" class="input" name="new_passwd">
+                        <span id="error_new_passwd" class="error"></span>
+                    </div>
+                </form>
+                <br/>
+                <div class="button__recover">
+                    <button type="button" name="change_passwd" id="change_passwd">CHANGE</button>
+                </div>
+            </div><br><br><br><br>
+        </div>
+
     </body>
 </html>

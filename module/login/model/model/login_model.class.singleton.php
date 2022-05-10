@@ -25,6 +25,17 @@
         public function get_login($args) {
             return $this -> bll -> get_login_BLL($args);
         }
+        public function get_send_recover_email($args) {
+            return $this -> bll -> get_send_recover_email_BLL($args);
+        }
+
+        public function get_send_new_passwd($args) {
+            return $this -> bll -> get_send_new_passwd_BLL($args);
+        }
+
+        public function get_verify_email_token($args) {
+            return $this -> bll -> get_verify_email_token_BLL($args);
+        }
 
         public function get_logout() {
             return $this -> bll -> get_logout_BLL();

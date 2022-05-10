@@ -2,11 +2,16 @@ function login() {
     if (validate_login() != 0) {
         var data = $('#login__form').serialize();
         ajaxPromise('?module=login&op=login', 'POST', 'JSON', data)
-            .then(function(result) {
+            .then(function (result) {
+                console.log(result);
                 if (result == "error_user") {
-                    document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
-                } else if (result == "error_passwd") {
-                    document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta"
+                    document.getElementById('error_username_log').innerHTML = "* El usario no existe,asegurase de que lo a escrito correctamente"
+                }else if(result == "error_actiavate"){
+                    toastr.warning("El usario esta desacivado, revise su bandeja de entrada");
+                    setTimeout(' window.location.href = "?module=home&op=view"; ', 1000);
+                } 
+                else if (result == "error_passwd") {
+                    document.getElementById('error_passwd_log').innerHTML = "* La contraseña es incorrecta"
                 } else {
                     localStorage.setItem("token", result);
                     toastr.success("Loged succesfully");
@@ -17,7 +22,7 @@ function login() {
                         setTimeout(' window.location.href = "?module=home&op=view"; ', 1000);
                     }
                 }
-            }).catch(function(textStatus) {
+            }).catch(function (textStatus) {
                 if (console && console.log) {
                     console.log("La solicitud ha fallado: " + textStatus);
                 }
@@ -25,20 +30,31 @@ function login() {
     }
 }
 
-function key_login() {
-    $("#login").keypress(function(e) {
+function click_login() {
+    $("#login").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
             login();
         }
     });
-}
 
-function button_login() {
-    $('#login').on('click', function(e) {
+    $('#login').on('click', function (e) {
         e.preventDefault();
         login();
+    });
+
+    $("#recover_passwd").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            load_form_rec_email();
+        }
+    });
+
+    $('#recover_passwd').on('click', function (e) {
+        e.preventDefault();
+        load_form_rec_email();
     });
 }
 
@@ -46,11 +62,11 @@ function validate_login() {
     var error = false;
 
     if (document.getElementById('username_log').value.length === 0) {
-        document.getElementById('error_username_log').innerHTML = "Tienes que escribir el usuario";
+        document.getElementById('error_username_log').innerHTML = "* Tienes que escribir el usuario";
         error = true;
     } else {
         if (document.getElementById('username_log').value.length < 5) {
-            document.getElementById('error_username_log').innerHTML = "El usuario tiene que tener 5 caracteres como minimo";
+            document.getElementById('error_username_log').innerHTML = "* El usuario tiene que tener 5 caracteres como minimo";
             error = true;
         } else {
             document.getElementById('error_username_log').innerHTML = "";
@@ -58,7 +74,7 @@ function validate_login() {
     }
 
     if (document.getElementById('passwd_log').value.length === 0) {
-        document.getElementById('error_passwd_log').innerHTML = "Tienes que escribir la contraseña";
+        document.getElementById('error_passwd_log').innerHTML = "* Tienes que escribir la contraseña";
         error = true;
     } else {
         document.getElementById('error_passwd_log').innerHTML = "";
@@ -69,30 +85,205 @@ function validate_login() {
     }
 }
 
-// ---------------LOAD-CONTENT-----------
-function load_content() {
-    let path = window.location.search.split('&');
-    console.log(path);
-    if(path[2] === 'verify'){
-        console.log("verifyyy");
-        ajaxPromise('?module=login&op=verify_email', 'POST', 'JSON', {token_email: path[3]})
-        .then(function(data) {
-            console.log("REESULTADO");
-            console.log(data);
-            // window.location.href = friendlyURL("?module=home&op=view");
-        });
-        // .catch(function() {
-        //   console.log('Error: verify email error');
-        // });
-        
-    }
-    // else if (path[2] === 'recover') {
-       // load_form_new_password(path[4]);
-    // }
+// -------------------RECOVER-PASSWORD----------------
+function load_form_rec_email() {
+    $('.login-wrap').hide();
+    $('.recover-email-html').show();
+    button_send_email_rec();
 }
 
-$(document).ready(function() {
-    key_login();
-    button_login();
+function button_send_email_rec() {
+    $("#send_recover").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            send_email_recover_passwd();
+        }
+    });
+
+    $('#send_recover').on('click', function (e) {
+        e.preventDefault();
+        send_email_recover_passwd();
+    });
+}
+
+function send_email_recover_passwd() {
+    if (validate_send_email_rec() != 0) {
+        var data = $('#rec_passwd_email').serialize();
+        ajaxPromise('?module=login&op=send_recover_email', 'POST', 'JSON', data)
+            .then(function (data) {
+                console.log(data);
+                if (data == "error_email") {
+                    $("#error_email_rec").html("* The email doesn't exist");
+                } else {
+                    localStorage.setItem("email_token", data);
+                    toastr.warning("Check email sended");
+                    setTimeout('window.location.href = "?module=login&op=login_register_view"; ', 1500);
+                }
+            }).catch(function () {
+                console.log("Error send_email_recover_passwd");
+            });
+    }
+}
+function validate_send_email_rec() {
+    var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    var error = false;
+
+    if (document.getElementById('email_rec').value.length === 0) {
+        document.getElementById('error_email_rec').innerHTML = "* Tienes que escribir un correo";
+        error = true;
+    } else {
+        if (!mail_exp.test(document.getElementById('email_rec').value)) {
+            document.getElementById('error_email_rec').innerHTML = "* Debe de cumplir el formato de email";
+            error = true;
+        } else {
+            document.getElementById('error_email_rec').innerHTML = "";
+        }
+    }
+
+    if (error == true) {
+        return 0;
+    }
+}
+
+function load_form_new_passwd() {
+    if (localStorage.getItem('email_token')) {
+        toastr.success("Password change verified");
+        var email_token = localStorage.getItem('email_token');
+        localStorage.removeItem('email_token');
+        ajaxPromise('?module=login&op=verify_email_token', 'POST', 'JSON', { 'email_token': email_token })
+            .then(function (data) {
+                if (data == "correctly_email") {
+                    click_change_password(email_token);
+                } else {
+                    console.log("error email token");
+                }
+            }).catch(function () {
+                console.log('Error cheked email_token');
+            });
+        //Mejora para cuando dan para que el link de recover passwd del email solo se puieda usar una vez para que sea mass seguro
+    } else {
+        toastr.warning("The time to change the password has expired");
+        setTimeout(' window.location.href = "?module=login&op=login_register_view";', 1500);
+    }
+}
+
+function click_change_password(email_token) {
+    $("#change_passwd").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            send_new_passwd(email_token);
+        }
+    });
+   
+    $('#change_passwd').on('click', function (e) {
+        e.preventDefault();
+        send_new_passwd(email_token);
+    });
+}
+
+function send_new_passwd(email_token) {
+    if (validate_new_password() != 0) {
+        var data = $('#recover-passwd').serialize() + '&email_token=' + email_token;
+        console.log(data);
+        ajaxPromise('?module=login&op=send_new_passwd', 'POST', 'JSON', data)
+            .then(function (data) {
+                console.log(data);
+                if (data == "error_old_passwd") {
+                    $("#error_old_passwd").html("* The passsword is incorrect");
+                } else if (data == "correctly_update") {
+                    $("#error_old_passwd").html("");
+                    toastr.success("Password changed successfully");
+                    setTimeout('window.location.href = "?module=login&op=login_register_view&load_all_view"; ', 1500);
+                }
+            }).catch(function () {
+                console.log("Error send_email_recover_passwd");
+            });
+    }
+}
+
+
+function validate_new_password() {
+    var pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
+    var error = false;
+
+    if (document.getElementById('old_passwd').value.length === 0) {
+        document.getElementById('error_old_passwd').innerHTML = "* Tienes que escribir tu antigua contraseña";
+        error = true;
+    } else {
+        if (document.getElementById('old_passwd').value.length < 8) {
+            document.getElementById('error_old_passwd').innerHTML = "* La password tiene que tener 8 caracteres como minimo";
+            error = true;
+        } else {
+            if (!pssswd_exp.test(document.getElementById('old_passwd').value)) {
+                document.getElementById('error_old_passwd').innerHTML = "* Debe de contener mayusculas, minusculas y simbolos especiales";
+                error = true;
+            } else {
+                document.getElementById('error_old_passwd').innerHTML = "";
+            }
+        }
+    }
+
+    if (document.getElementById('new_passwd').value.length === 0) {
+        document.getElementById('error_new_passwd').innerHTML = "* Debe de introducir la nueva contraseña";
+        error = true;
+    } else if (!pssswd_exp.test(document.getElementById('new_passwd').value)) {
+        document.getElementById('error_new_passwd').innerHTML = "* Debe de contener mayusculas, minusculas y simbolos especiales";
+        error = true;
+    } else {
+        if (document.getElementById('new_passwd').value.length < 8) {
+            document.getElementById('error_new_passwd').innerHTML = "La password tiene que tener 8 caracteres como minimo";
+            error = true;
+        } else {
+            if (document.getElementById('new_passwd').value === document.getElementById('old_passwd').value) {
+                document.getElementById('error_new_passwd').innerHTML = "* Introduzca una pasword diferente a la anterior";
+            } else {
+                document.getElementById('error_new_passwd').innerHTML = "";
+            }
+        }
+    }
+    if (error == true) {
+        return 0;
+    }
+}
+
+
+
+// -------------------LOAD-CONTENT----------------
+function load_content() {
+    let path = window.location.search.split('&');
+    if (path[2] === 'verify') {
+        ajaxPromise('?module=login&op=verify_email', 'POST', 'JSON', { token_email: path[3] })
+            .then(function (data) {
+                toastr.success("Verify email succesfully");
+                setTimeout(' window.location.href = "?module=home&op=view&load_all_view";', 1500);
+            }).catch(function () {
+                console.log('Error: verify email error');
+            });
+
+    } else if (path[2] === 'recover') {
+        window.location.href = "?module=login&op=login_register_view&load_recover";
+    }
+    if (path[2] === 'load_recover') {
+        $('.recover-passwd-html').show();
+        $('.recover-email-html').hide();
+        $('.login-wrap').hide();
+        load_form_new_passwd();
+    } else if (path[2] === 'load_all_view') {
+        $('.recover-email-html').hide();
+        $('.recover-passwd-html').hide();
+        $('.login-wrap').show();
+    }
+}
+
+function forms_hide() {
+    $('.recover-email-html').hide();
+    $('.recover-passwd-html').hide();
+}
+
+$(document).ready(function () {
+    forms_hide();
+    click_login();
     load_content();
 });

@@ -67,19 +67,75 @@
 			$useraname = $args[0];
 			$password = $args[1];
 			$exist_user=  $this -> dao -> select_user($this->db, $useraname);
+			
 			if (!$exist_user) {
 				return "error_user";
 			}else{
-				if (password_verify($password, $exist_user[0]['password'])) {
-                    $token= middleware::create_token($exist_user[0]["username"]);
-                    $_SESSION['username'] = $exist_user[0]['username']; //Guardamos el usario 
-                    $_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
-                    return $token;
-                } else {
-                    return "error_passwd";
-                }
+				$user_active= $exist_user[0]['active'];
+				if ($user_active == "0") {
+					return "error_actiavate";
+				}else {
+					if (password_verify($password, $exist_user[0]['password'])) {
+						$token= middleware::create_token($exist_user[0]["username"]);
+						$_SESSION['username'] = $exist_user[0]['username']; //Guardamos el usario 
+						$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+						return $token;
+					} else {
+						return "error_passwd";
+					}
+				}
+				
 			}
 		}
+
+		public function get_send_recover_email_BLL($email) {
+			$exite_email = $this -> dao -> select_email($this->db, $email);
+			$token = common::generate_Token_secure(20);
+
+			if (!empty($exite_email)) {
+				$update= $this -> dao -> update_recover_password($this->db, $email, $token);
+				if ($update) {
+					$message = [
+						'type' => 'recover', 
+						'token' => $token, 
+						'toEmail' => $email
+					];
+					$email = json_decode(mail::send_email($message), true);
+					if (!empty($email)) {
+						return $token;  
+					}  
+				} 
+            }else{
+                return 'error_email';
+            }
+		}
+		
+		public function get_verify_email_token_BLL($token_email) {
+			if($this -> dao -> select_verify_email($this->db, $token_email)){
+				return 'correctly_email';
+			}else {
+				return 'error_email';
+			}
+		}
+
+		public function get_send_new_passwd_BLL($args) {
+			$email_token= $args[0];
+			$old_passwd= $args[1];
+			$new_passwd=password_hash($args[2], PASSWORD_DEFAULT, ['cost' => 12]);
+		
+			$passwd_user= $this -> dao -> select_old_passwd_email_token($this->db, $email_token);
+
+			if(password_verify($old_passwd, $passwd_user[0]['password'])) {
+				if ($this -> dao -> update_new_passwd_email($this->db, $email_token, $new_passwd)) {
+					return 'correctly_update';
+				}
+				
+			}else {
+				return 'error_old_passwd';
+			}
+		}
+
+		
 
 		public function get_logout_BLL() {
 			unset($_SESSION['username']);

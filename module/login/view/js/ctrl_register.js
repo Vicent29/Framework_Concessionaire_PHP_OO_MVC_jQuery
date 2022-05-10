@@ -9,8 +9,8 @@ function register() {
                 } else if (result == "error_user") {
                     document.getElementById('error_username_reg').innerHTML = "El usuario ya esta en uso, intentalo con otro"
                 } else {
-                    toastr.success("Registery succesfully");
-                    setTimeout(' window.location.href = "?module=login&op=login_register_view"; ', 1000);
+                    toastr.warning("Check registration from email");
+                    setTimeout(' window.location.href = "?module=login&op=login_register_view"; ', 1500);
                 }
             }).catch(function(textStatus) {
                console.log("La solicitud ha fallado: " + textStatus); 
@@ -102,8 +102,6 @@ function validate_register() {
                 document.getElementById('error_passwd2_reg').innerHTML = "La password's no coinciden";
                 error = true;
             }
-
-
         }
     }
 
