@@ -33,6 +33,10 @@
             return $this -> bll -> get_send_new_passwd_BLL($args);
         }
 
+        public function get_social_login($args) {
+            return $this -> bll -> get_social_login_BLL($args);
+        }
+        
         public function get_verify_email_token($args) {
             return $this -> bll -> get_verify_email_token_BLL($args);
         }

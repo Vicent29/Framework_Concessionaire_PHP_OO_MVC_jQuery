@@ -46,21 +46,22 @@ function load_menu() {
     if (token) {
         ajaxPromise('?module=login&op=data_user', 'POST', 'JSON', { 'token': token })
             .then(function(data) {
+                var username= data[0].username.split(' '); //Mejora para quue solo salga el nombre
                 if (data.type_user == "client") {
                     console.log("Client loged");
                     $('.opc_exceptions').empty();
                 } else {
                     console.log("Admin loged");
                     $('.opc_exceptions').empty();
-                    // $('.opc_exceptions').show();
+                   
                 }
                 $('.log-icon').empty();
                 $('#user_info').empty();
-                $('<img src="' + data[0].avatar + '"alt="Robot">').appendTo('.log-icon');
+                $('<img src="' + data[0].avatar + '"alt="Img user">').appendTo('.log-icon');
                 $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
                     .html(
                         '<a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>' +
-                        '<a>' + data[0].username + '<a/>'
+                        '<a>' + username[0] + '<a/>'
 
                     )
 

@@ -30,10 +30,16 @@
         }
 
         public function insert_user($db, $id_user, $username, $hashed_pass, $email,$email_token, $avatar ) {
-            $sql = "INSERT INTO `users`(`id_user`,`username`, `password`, `email`,`email_token`, `type_user`, `avatar`) 
-                    VALUES ('$id_user','$username','$hashed_pass','$email','$email_token','client','$avatar')";
+            $sql = "INSERT INTO `users`(`id_user`,`username`, `password`, `email`,`email_token`, `type_user`, `avatar`, `provider`) 
+                    VALUES ('$id_user','$username','$hashed_pass','$email','$email_token','client','$avatar', 'web-concesionaire')";
             return $db->ejecutar($sql);
         }
+        public function  insert_user_social_login($db, $id_user, $username, $email, $email_token, $avatar, $provider ) {
+            $sql = "INSERT INTO `users`(`id_user`,`active`,`username`, `email`, `email_token` , `type_user`, `avatar`, `provider`) 
+                    VALUES ('$id_user','1','$username','$email', '$email_token','client','$avatar','$provider')";
+            return $db->ejecutar($sql);
+        }
+       
         public function update_recover_password($db, $email, $token_email) {
             $sql = $sql = "UPDATE `users` SET `email_token`= '$token_email', `active`= '0' WHERE `email` = '$email'";
             $stmt = $db->ejecutar($sql);

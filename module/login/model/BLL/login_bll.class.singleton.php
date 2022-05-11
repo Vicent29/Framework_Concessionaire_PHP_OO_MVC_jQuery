@@ -18,12 +18,12 @@
 
 		public function get_register_BLL($args) {
 			
-			$useraname= $args[0];
+			$username= $args[0];
 			$password= $args[1];
 			$email= $args[2];
 			
 			$exist_user_email=  $this -> dao -> select_email($this->db, $email);
-			$exist_user_username=  $this -> dao -> select_user($this->db, $useraname);
+			$exist_user_username=  $this -> dao -> select_user($this->db, $username);
 
 			if (!$exist_user_email  && !$exist_user_username) {
 				$hashed_pass = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
@@ -31,7 +31,7 @@
             	$avatar = "https://i.pravatar.cc/500?u=$hashavatar";
 				$email_token = common::generate_Token_secure(20);
 				$id_user = common::generate_Token_secure(6);
-				$rdo=  $this -> dao -> insert_user($this->db, $id_user, $useraname, $hashed_pass, $email, $email_token, $avatar);
+				$rdo=  $this -> dao -> insert_user($this->db, $id_user, $username, $hashed_pass, $email, $email_token, $avatar);
 				if($rdo){
 					$message = [
 						'type' => 'validate',
@@ -135,7 +135,40 @@
 			}
 		}
 
-		
+		public function get_social_login_BLL($args) {
+			$id= $args[0];
+			$username= $args[1];
+			$email= $args[2];
+			$avatar= $args[3];
+			$provider= $args[4]; 
+			$email_token = common::generate_Token_secure(20);
+
+			$exist_user_email=  $this -> dao -> select_email($this->db, $email);
+			$exist_user_username=  $this -> dao -> select_user($this->db, $username);
+
+			if (!$exist_user_email  && !$exist_user_username) {	
+				$correct_insert= $this->dao->insert_user_social_login($this->db, $id, $username, $email, $email_token, $avatar, $provider);
+				if ($correct_insert == false) {
+					return "error insert";
+				}else {
+					$message = [
+						'type' => 'registration_notice',
+						'token' => $email_token, 
+						'toEmail' => $email
+					];
+					$email = json_decode(mail::send_email($message), true);
+					if ($email) {
+						$_SESSION['username'] = $username;
+						$_SESSION['tiempo'] = time();
+						return middleware::create_token($username);
+					}  
+				}
+			}else {
+				$_SESSION['username'] = $username;
+				$_SESSION['tiempo'] = time();
+				return middleware::create_token($username);
+			}
+		}
 
 		public function get_logout_BLL() {
 			unset($_SESSION['username']);

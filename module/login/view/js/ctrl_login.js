@@ -6,10 +6,10 @@ function login() {
                 console.log(result);
                 if (result == "error_user") {
                     document.getElementById('error_username_log').innerHTML = "* El usario no existe,asegurase de que lo a escrito correctamente"
-                }else if(result == "error_actiavate"){
+                } else if (result == "error_actiavate") {
                     toastr.warning("El usario esta desacivado, revise su bandeja de entrada");
                     setTimeout(' window.location.href = "?module=home&op=view"; ', 1000);
-                } 
+                }
                 else if (result == "error_passwd") {
                     document.getElementById('error_passwd_log').innerHTML = "* La contraseña es incorrecta"
                 } else {
@@ -31,6 +31,7 @@ function login() {
 }
 
 function click_login() {
+    //LOGIN
     $("#login").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
@@ -43,7 +44,7 @@ function click_login() {
         e.preventDefault();
         login();
     });
-
+    //RECOVER PASSWORD
     $("#recover_passwd").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
@@ -55,6 +56,17 @@ function click_login() {
     $('#recover_passwd').on('click', function (e) {
         e.preventDefault();
         load_form_rec_email();
+    });
+    //LOGIN GIT HUB
+    $('#login_git').on('click', function (e) {
+        e.preventDefault();
+        social_login("github");
+
+    });
+    //LOGIN GOOGLE
+    $('#login_google').on('click', function (e) {
+        e.preventDefault();
+        social_login("google");
     });
 }
 
@@ -176,7 +188,7 @@ function click_change_password(email_token) {
             send_new_passwd(email_token);
         }
     });
-   
+
     $('#change_passwd').on('click', function (e) {
         e.preventDefault();
         send_new_passwd(email_token);
@@ -202,7 +214,6 @@ function send_new_passwd(email_token) {
             });
     }
 }
-
 
 function validate_new_password() {
     var pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
@@ -248,6 +259,62 @@ function validate_new_password() {
     }
 }
 
+// -------------------SOCIAL-LOGIN----------------
+function social_login(param) {
+    authService = firebase_config();
+    authService.signInWithPopup(provider_config(param))
+        .then(function (result) {
+            var data_user = { id: result.user.uid, username: result.user.displayName, email: result.user.email, avatar: result.user.photoURL, provider: result.credential.provider };
+            if (result) {
+                ajaxPromise("?module=login&op=social_login", 'POST', 'JSON', data_user)
+                    .then(function (data) {
+                        console.log(data);
+                        if (data == "error_insert") {
+                            toastr.error('Error logging in, you may already have an account.');
+                        }else {
+                            localStorage.setItem("token", data);
+                            toastr.success("Loged succesfully");
+        
+                            if (localStorage.getItem('redirect_like')) {
+                                setTimeout(' window.location.href = "?module=shop&op=list"; ', 1000);
+                            } else {
+                                setTimeout(' window.location.href = "?module=home&op=view"; ', 1000);
+                            }
+                        }
+                    });
+            }
+        // }).catch(function (error) {
+        //     console.log('Error social login', error);
+        });
+}
+
+function firebase_config() {
+    var config = {
+        apiKey: "AIzaSyAzGh7-z5tVoeu04I4HMqlz4bE4xSgbLSg",
+        authDomain: "web-concesionario.firebaseapp.com",
+        databaseURL: "https://web-concesionario.firebaseio.com",
+        projectId: "web-concesionario",
+        storageBucket: "web-concesionario.appspot.com",
+        messagingSenderId: "369700061150"  //613764177727    
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(config);
+    } else {
+        firebase.app();
+    }
+    return authService = firebase.auth();
+}
+
+function provider_config(param) {
+    if (param === 'google') {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('email');
+        return provider;
+    } else if (param === 'github') {
+        return provider = new firebase.auth.GithubAuthProvider();
+    }
+}
+
 
 
 // -------------------LOAD-CONTENT----------------
@@ -282,8 +349,10 @@ function forms_hide() {
     $('.recover-passwd-html').hide();
 }
 
+
 $(document).ready(function () {
     forms_hide();
     click_login();
     load_content();
+    firebase_config();
 });

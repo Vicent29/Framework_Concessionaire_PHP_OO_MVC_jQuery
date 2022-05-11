@@ -30,6 +30,10 @@
             echo json_encode(common::load_model('login_model', 'get_send_new_passwd', [$_POST['email_token'], $_POST['old_passwd'], $_POST['new_passwd']]));
         }
 
+        function social_login() {
+            echo json_encode(common::load_model('login_model', 'get_social_login', [$_POST['id'], $_POST['username'], $_POST['email'], $_POST['avatar'], $_POST['provider']]));
+        }
+
         function logout() {
             echo json_encode(common::load_model('login_model', 'get_logout'));
         }
