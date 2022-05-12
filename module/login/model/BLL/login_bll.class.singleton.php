@@ -89,8 +89,16 @@
 		}
 
 		public function get_send_recover_email_BLL($email) {
+
+			$provider_user = $this -> dao -> select_provider_user($this->db, $email)[0]['provider'];
+			if ($provider_user != "google.com" && $provider_user != "github.com") {
 			$exite_email = $this -> dao -> select_email($this->db, $email);
 			$token = common::generate_Token_secure(20);
+			}else {
+				return "email_social_login";
+			}
+			
+
 
 			if (!empty($exite_email)) {
 				$update= $this -> dao -> update_recover_password($this->db, $email, $token);

@@ -313,17 +313,18 @@ label.recover_passwd:hover{
     text-align: center;
 }
 
-.button_git{
+.button_git, .button_google{
     background-color: white;
     color: black;
     font-weight: bold;
     border-radius: 25px;
-    width: 100px;
+    width: 120px;
+    height: 33px;
 }
-.button_google{
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    border-radius: 25px;
-    width: 100px;
+#ic_git {
+    font-size: 27px;
+}
+#ic_google {
+    font-size: 25px;
+    color: red;
 }

@@ -26,6 +26,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+
     <!-- MIS LINKS -->
     <script type="text/javascript" src="<?php echo JS_PATH ?>translate.js"></script>
     <script type="text/javascript" src="<?php echo JS_PATH ?>main.js"></script>

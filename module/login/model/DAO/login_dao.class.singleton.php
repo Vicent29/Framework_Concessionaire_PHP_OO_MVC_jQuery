@@ -39,6 +39,12 @@
                     VALUES ('$id_user','1','$username','$email', '$email_token','client','$avatar','$provider')";
             return $db->ejecutar($sql);
         }
+
+        public function select_provider_user($db, $email) {
+            $sql = "SELECT provider FROM users WHERE email='$email'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
        
         public function update_recover_password($db, $email, $token_email) {
             $sql = $sql = "UPDATE `users` SET `email_token`= '$token_email', `active`= '0' WHERE `email` = '$email'";

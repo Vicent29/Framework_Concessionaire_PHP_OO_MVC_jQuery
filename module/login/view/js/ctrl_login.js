@@ -127,6 +127,9 @@ function send_email_recover_passwd() {
                 console.log(data);
                 if (data == "error_email") {
                     $("#error_email_rec").html("* The email doesn't exist");
+                }else if(data == "email_social_login"){
+                    toastr.error("You can't change the password, the email belongs to another company");
+                    setTimeout('window.location.href = "?module=login&op=login_register_view"; ', 2500);
                 } else {
                     localStorage.setItem("email_token", data);
                     toastr.warning("Check email sended");
@@ -268,7 +271,6 @@ function social_login(param) {
             if (result) {
                 ajaxPromise("?module=login&op=social_login", 'POST', 'JSON', data_user)
                     .then(function (data) {
-                        console.log(data);
                         if (data == "error_insert") {
                             toastr.error('Error logging in, you may already have an account.');
                         }else {
@@ -283,8 +285,8 @@ function social_login(param) {
                         }
                     });
             }
-        // }).catch(function (error) {
-        //     console.log('Error social login', error);
+        }).catch(function (error) {
+            console.log('Error social login', error);
         });
 }
 
