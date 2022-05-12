@@ -1,5 +1,4 @@
 <?php
- // @session_start();
     class ctrl_login {
         function login_register_view() {
             common::load_view('top_page_login.php', VIEW_PATH_LOGIN . 'login_register.html');
