@@ -31,9 +31,11 @@
                             <button id="login_google" class="button_google"><i id="ic_google" class="fa-brands fa-google fa-xl"></i> GOOGLE</button>
                         </div>
                         <div class="hr"></div>
-                        <div class="foot-lnk">
-                            <label for="tab-2">You don't have an account? | </label>
-                            <label class="recover_passwd" id="recover_passwd"> Forgot password?</label>
+                        <div class="passwd_mod">
+                            <label class="recover_passwd" id="recover_passwd"> Recover password?</label>
+                            <label >  |  </label>
+                            <label class="modificate_passwd" id="modificate_passwd"> Change password</label>
+                            <label for="tab-2">You don't have an account?</label>
                         </div>
                     </div>
                 </form>
@@ -73,7 +75,7 @@
             </div>
         </div>
     </div>
-    <!-- RECOVER PASSWORD- EMAIL-->
+    <!-- RECOVER AND MODIFICATE PASSWORD - EMAIL-->
     <div class="recover-email-html">
         <br>
         <div class="recover-form-email">
@@ -100,6 +102,31 @@
             <hr>
             <form id="recover-passwd" method="post">
                 <div class="group">
+                    <label>NEW PASSWORD</label><br>
+                    <input id="new_passwd1" type="password" class="input" name="new_passwd1">
+                    <span id="error_new_passwd1" class="error"></span>
+                </div>
+                <div class="group">
+                    <label>REPEAT PASSWORD</label><br>
+                    <input id="new_passwd2" type="password" class="input" name="new_passwd2">
+                    <span id="error_new_passwd2" class="error"></span>
+                </div>
+            </form>
+            <br />
+            <div class="button__recover">
+                <button type="button" name="recover_passwd_bt" id="recover_passwd_bt">CHANGE</button>
+            </div>
+        </div><br><br><br><br>
+    </div>
+
+    <!-- MODIFICATE PASSWORD -->
+    <div class="modificate-passwd-html">
+        <br>
+        <div class="recover-form">
+            <h2><b>CHANGE PASSWORD</b></h2>
+            <hr>
+            <form id="modificate-passwd" method="post">
+                <div class="group">
                     <label>OLD PASSWORD</label><br>
                     <input id="old_passwd" type="password" class="input" name="old_passwd">
                     <span id="error_old_passwd" class="error"></span>
@@ -112,11 +139,12 @@
             </form>
             <br />
             <div class="button__recover">
-                <button type="button" name="change_passwd" id="change_passwd">CHANGE</button>
+                <button type="button" name="modificate_passwd_bt" id="modificate_passwd_bt">CHANGE</button>
             </div>
         </div><br><br><br><br>
     </div>
 
 </body>
+
 
 </html>

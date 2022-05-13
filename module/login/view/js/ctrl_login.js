@@ -44,18 +44,16 @@ function click_login() {
         e.preventDefault();
         login();
     });
-    //RECOVER PASSWORD
-    $("#recover_passwd").keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 13) {
-            e.preventDefault();
-            load_form_rec_email();
-        }
+    modificate_passwd
+    //MODIFICATE PASSWORD 
+    $('#modificate_passwd').on('click', function (e) {
+        e.preventDefault();
+        load_form_rec_email("modificate");
     });
-
+    //RECOVER PASSWORD 
     $('#recover_passwd').on('click', function (e) {
         e.preventDefault();
-        load_form_rec_email();
+        load_form_rec_email("recover");
     });
     //LOGIN GIT HUB
     $('#login_git').on('click', function (e) {
@@ -98,36 +96,38 @@ function validate_login() {
 }
 
 // -------------------RECOVER-PASSWORD----------------
-function load_form_rec_email() {
+function load_form_rec_email(opc) {
     $('.login-wrap').hide();
+    $('.modificate-passwd-html').hide();
     $('.recover-email-html').show();
-    button_send_email_rec();
+
+    button_send_email_rec(opc);
 }
 
-function button_send_email_rec() {
+function button_send_email_rec(opc) {
     $("#send_recover").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
-            send_email_recover_passwd();
+            send_email_recover_passwd(opc);
         }
     });
 
     $('#send_recover').on('click', function (e) {
         e.preventDefault();
-        send_email_recover_passwd();
+        send_email_recover_passwd(opc);
     });
 }
 
-function send_email_recover_passwd() {
+function send_email_recover_passwd(opc) {
     if (validate_send_email_rec() != 0) {
-        var data = $('#rec_passwd_email').serialize();
+        var data = $('#rec_passwd_email').serialize() + '&opc_passswd=' + opc;
         ajaxPromise('?module=login&op=send_recover_email', 'POST', 'JSON', data)
             .then(function (data) {
                 console.log(data);
                 if (data == "error_email") {
                     $("#error_email_rec").html("* The email doesn't exist");
-                }else if(data == "email_social_login"){
+                } else if (data == "email_social_login") {
                     toastr.error("You can't change the password, the email belongs to another company");
                     setTimeout('window.location.href = "?module=login&op=login_register_view"; ', 2500);
                 } else {
@@ -163,7 +163,7 @@ function validate_send_email_rec() {
 
 function load_form_new_passwd() {
     if (localStorage.getItem('email_token')) {
-        toastr.success("Password change verified");
+        toastr.success("Verified email to change password");
         var email_token = localStorage.getItem('email_token');
         localStorage.removeItem('email_token');
         ajaxPromise('?module=login&op=verify_email_token', 'POST', 'JSON', { 'email_token': email_token })
@@ -184,41 +184,67 @@ function load_form_new_passwd() {
 }
 
 function click_change_password(email_token) {
-    $("#change_passwd").keypress(function (e) {
+    // MODIFICATE PASSWD
+    $("#modificate_passwd_bt").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
-            send_new_passwd(email_token);
+            send_new_passwd(email_token, "modificate");
         }
     });
-
-    $('#change_passwd').on('click', function (e) {
+    $('#modificate_passwd_bt').on('click', function (e) {
         e.preventDefault();
-        send_new_passwd(email_token);
+        send_new_passwd(email_token, "modificate");
+    });
+    // RECOVER PASSWD
+    $("#recover_passwd_bt").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            send_new_passwd(email_token, "recover");
+        }
+    });
+    $('#recover_passwd_bt').on('click', function (e) {
+        e.preventDefault();
+        send_new_passwd(email_token, "recover");
     });
 }
 
-function send_new_passwd(email_token) {
-    if (validate_new_password() != 0) {
-        var data = $('#recover-passwd').serialize() + '&email_token=' + email_token;
-        console.log(data);
-        ajaxPromise('?module=login&op=send_new_passwd', 'POST', 'JSON', data)
-            .then(function (data) {
-                console.log(data);
-                if (data == "error_old_passwd") {
-                    $("#error_old_passwd").html("* The passsword is incorrect");
-                } else if (data == "correctly_update") {
-                    $("#error_old_passwd").html("");
-                    toastr.success("Password changed successfully");
-                    setTimeout('window.location.href = "?module=login&op=login_register_view&load_all_view"; ', 1500);
-                }
-            }).catch(function () {
-                console.log("Error send_email_recover_passwd");
-            });
+function send_new_passwd(email_token, opc_passwd) {
+    if (opc_passwd == "modificate") {
+        if (validate_modificate_password() != 0) {
+            var data = $('#modificate-passwd').serialize() + '&email_token=' + email_token;
+            console.log(data);
+            ajaxPromise('?module=login&op=send_new_passwd_modificate', 'POST', 'JSON', data)
+                .then(function (data) {
+                    if (data == "error_old_passwd") {
+                        $("#error_old_passwd").html("* The passsword is incorrect");
+                    } else if (data == "correctly_update") {
+                        $("#error_old_passwd").html("");
+                        toastr.success("Password changed successfully");
+                        setTimeout('window.location.href = "?module=login&op=login_register_view&load_all_view"; ', 1500);
+                    }
+                // }).catch(function () {
+                //     console.log("Error send_email_modificate_passwd");
+                });
+        }
+    } else if (opc_passwd == "recover") {
+        if (validate_recover_password() != 0) {
+            var data = $('#recover-passwd').serialize() + '&email_token=' + email_token;
+            ajaxPromise('?module=login&op=send_new_passwd_recover', 'POST', 'JSON', data)
+                .then(function (data) {
+                    if (data == "correctly_update") {
+                        toastr.success("Password changed successfully");
+                        setTimeout('window.location.href = "?module=login&op=login_register_view&load_all_view"; ', 1500);
+                    }
+                }).catch(function () {
+                    console.log("Error send_email_recover_passwd");
+                });
+        }
     }
 }
 
-function validate_new_password() {
+function validate_modificate_password() {
     var pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
     var error = false;
 
@@ -262,6 +288,47 @@ function validate_new_password() {
     }
 }
 
+function validate_recover_password() {
+    var pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
+    var error = false;
+    if (document.getElementById('new_passwd1').value.length === 0) {
+        document.getElementById('error_new_passwd1').innerHTML = "* Debe de introducir la nueva contraseña";
+        error = true;
+    }else if (document.getElementById('new_passwd1').value.length < 8) {
+        document.getElementById('error_new_passwd1').innerHTML = "* La password tiene que tener 8 caracteres como minimo";
+        error = true;
+    } else {
+        if (!pssswd_exp.test(document.getElementById('new_passwd1').value)) {
+            document.getElementById('error_new_passwd1').innerHTML = "* Debe de contener mayusculas, minusculas y simbolos especiales";
+            error = true;
+        } else {
+            document.getElementById('error_new_passwd1').innerHTML = "";
+        }
+    }
+    if (document.getElementById('new_passwd2').value.length === 0) {
+        document.getElementById('error_new_passwd2').innerHTML = "* Debe de repetir la nueva contraseña";
+        error = true;
+    }else if (document.getElementById('new_passwd2').value.length < 8) {
+        document.getElementById('error_new_passwd2').innerHTML = "* La password tiene que tener 8 caracteres como minimo";
+        error = true;
+    } else {
+        if (!pssswd_exp.test(document.getElementById('new_passwd2').value)) {
+            document.getElementById('error_new_passwd2').innerHTML = "* Debe de contener mayusculas, minusculas y simbolos especiales";
+            error = true;
+        } else {
+            if (document.getElementById('new_passwd1').value !== document.getElementById('new_passwd2').value) {
+                document.getElementById('error_new_passwd2').innerHTML = "* La contarseña se debe repetir";
+                error = true;
+            }else{
+                document.getElementById('error_new_passwd2').innerHTML = "";
+            }
+        }
+    }
+    if (error == true) {
+        return 0;
+    }
+}
+
 // -------------------SOCIAL-LOGIN----------------
 function social_login(param) {
     authService = firebase_config();
@@ -273,10 +340,10 @@ function social_login(param) {
                     .then(function (data) {
                         if (data == "error_insert") {
                             toastr.error('Error logging in, you may already have an account.');
-                        }else {
+                        } else {
                             localStorage.setItem("token", data);
                             toastr.success("Loged succesfully");
-        
+
                             if (localStorage.getItem('redirect_like')) {
                                 setTimeout(' window.location.href = "?module=shop&op=list"; ', 1000);
                             } else {
@@ -333,10 +400,15 @@ function load_content() {
 
     } else if (path[2] === 'recover') {
         window.location.href = "?module=login&op=login_register_view&load_recover";
+    } else if (path[2] === 'modificate') {
+        window.location.href = "?module=login&op=login_register_view&load_modificate";
     }
     if (path[2] === 'load_recover') {
         $('.recover-passwd-html').show();
-        $('.recover-email-html').hide();
+        $('.login-wrap').hide();
+        load_form_new_passwd();
+    } else if (path[2] === 'load_modificate') {
+        $('.modificate-passwd-html').show();
         $('.login-wrap').hide();
         load_form_new_passwd();
     } else if (path[2] === 'load_all_view') {
@@ -349,6 +421,7 @@ function load_content() {
 function forms_hide() {
     $('.recover-email-html').hide();
     $('.recover-passwd-html').hide();
+    $('.modificate-passwd-html').hide();
 }
 
 
