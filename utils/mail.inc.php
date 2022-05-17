@@ -15,7 +15,7 @@ class mail
                 $e_values['inputMatter'] = 'Email verification';
                 $e_values['inputMessage'] = "<h2 style='color:green;'>✅ Email verification ✅</h2>
                                             <p>⬇️​ To verify and finish the registration press below ⬇️​</p>
-                                            <a href='http://localhost/Framework_Concesionaire/?module=login&op=login_register_view&verify&$e_values[token]' style='text-decoration:none;color:green;font-weight:bold;margin-left:35px;'>🔵​​(RECOVER PASSWORD)🔵​</a>";
+                                            <a href='http://localhost/Framework_Concesionaire/?module=login&op=login_register_view&verify&$e_values[token]' style='text-decoration:none;color:green;font-weight:bold;margin-left:35px;'>🔵​​(VERIFICATE EMAIL)🔵​</a>";
                 break;
                 case 'recover';
                 $e_values['toEmail'] = 'vicentesteve2002@gmail.com';
