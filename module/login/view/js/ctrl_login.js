@@ -44,7 +44,6 @@ function click_login() {
         e.preventDefault();
         login();
     });
-    modificate_passwd
     //MODIFICATE PASSWORD 
     $('#modificate_passwd').on('click', function (e) {
         e.preventDefault();

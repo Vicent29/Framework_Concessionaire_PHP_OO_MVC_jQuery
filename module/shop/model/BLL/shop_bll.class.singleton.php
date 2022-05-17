@@ -228,10 +228,6 @@
 			return $this -> dao -> select_count_all($this->db);
 		}
 
-		public function get_count_order_filter_BLL($args) {
-			return $this -> dao -> count_all_cars_order($this->db, $args);
-		}
-
 		public function get_count_cars_related_BLL($args) {
 			return $this -> dao -> count_more_cars_related($this->db,$args[0]);
 		}

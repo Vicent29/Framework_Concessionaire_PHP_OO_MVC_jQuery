@@ -44,10 +44,6 @@
             echo json_encode(common::load_model('shop_model', 'get_count_cars_home_filters',[$_POST['args'][0],$_POST['args'][1]]));
         }
 
-        function count_order_filter() {
-            echo json_encode(common::load_model('shop_model', 'get_count_order_filter', $_POST['value_orderby'][0]['order']));
-        }
-
         function count_cars_related() {
             echo json_encode(common::load_model('shop_model', 'get_count_cars_related', [$_POST['type_car']]));
         }

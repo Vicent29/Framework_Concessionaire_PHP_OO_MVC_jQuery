@@ -40,10 +40,6 @@
         <uri>count_cars_home_filters</uri>
     </function>
      <function>
-        <name>count_order_filter</name>
-        <uri>count_order_filter</uri>
-    </function>
-     <function>
         <name>count_cars_related</name>
         <uri>count_cars_related</uri>
     </function>

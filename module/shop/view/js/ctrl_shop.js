@@ -271,6 +271,7 @@ function save_filters() {
     var category = [];
     var filters = [];
 
+    localStorage.removeItem('total_prod');
     localStorage.removeItem('filters');
     localStorage.removeItem('search');
     localStorage.removeItem('order');
@@ -353,6 +354,8 @@ function highlightOrderBy() {
 }
 
 function remove_filters() {
+    localStorage.removeItem('total_prod');
+    localStorage.removeItem('page');
     localStorage.removeItem('filters');
     localStorage.removeItem('brand_filter');
     localStorage.removeItem('category_filter');
@@ -552,18 +555,14 @@ function load_pagination() {
         var total_prod= "0";
         var items_page= "4";
         var args= [total_prod, items_page, type_car, brand_car, city, opc_sql];
-        var url = "?module=shop&op=operations_search_filter";
-
-    } else if (localStorage.getItem('order')) {
-        var value_orderby = JSON.parse(localStorage.getItem('order'));
-        var url = '?module=shop&op=count_order_filter';
-        var args = { 'value_orderby': value_orderby }
-        
+        var url = "?module=shop&op=operations_search_filter";    
     } else {
         var url = "?module=shop&op=count_cars_pag";
     }
     ajaxPromise(url, 'POST', 'JSON', {args})
         .then(function(data) {
+            console.log("RESULTADO");
+            console.log(data);
             var total_pages = 0;
             var total_prod = data[0].n_prod;
 
@@ -587,8 +586,9 @@ function load_pagination() {
                 loadCars(total_prod, 4);
                 $('html, body').animate({ scrollTop: $(".list__content") });
             });
-        }).catch(function() {
-            console.log('Fail pagination');
+        }).catch(function(error) {
+            console.log(error);
+            // console.log('Fail pagination');
         });
 }
 

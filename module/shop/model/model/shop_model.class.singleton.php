@@ -49,11 +49,7 @@
         public function get_count_cars_home_filters($args) {
             return $this -> bll -> get_count_cars_home_filters_BLL($args);
         }
-
-        public function get_count_order_filter($args) {
-            return $this -> bll -> get_count_order_filter_BLL($args);
-        }
-
+        
         public function get_count_cars_related($args) {
             return $this -> bll -> get_count_cars_related_BLL($args);
         }

@@ -95,7 +95,7 @@ function btn_search() {
             search.push({ "brand_car": $('#brand_car').val() });
 
         }
-        // console.log(search[0]['brand_car'][0]);
+        localStorage.removeItem('total_prod');
         localStorage.removeItem('filters');
         localStorage.removeItem('brand_filter');
         localStorage.removeItem('category_filter');
