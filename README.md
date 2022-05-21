@@ -4,7 +4,7 @@
 <div style="margin-left: 35px;">
     <h4>What is<a style="text-decoration: none; color:black"
             href="https://github.com/Vicent29/Framework_Concessionaire_PHP_OO_MVC_jQuery.git"><b
-                style="color:blue;">ECO-CAR</b>?</a></h4>
+                style="color:blue;"> ECO-CAR</b>?</a></h4>
     <p style="margin-top: -10px;">It is a web page in which you can buy any type of car, besides being able to geolocate
         them and log in with your gmail or github, add the cars that you like to favorites and soon we will add the
         functionality of the cart</p>
@@ -108,18 +108,15 @@
             <li><a href="https://developer.mozilla.org/es/docs/Web/JavaScript">JavaScript</a></li>
             <li><a style="color: blue;" href="https://jquery.com/">JQuery</a></li>
         </ul>
-
     <h3 style="font-family: serif;"><b>◼️​ OTHER TECNOLOGYES:</b></h3>
         <ul style="margin-top: -10px;"> 
-            <li><a style="color: blue;" href="https://www.mysql.com/">SQL</a></li>
+            <li><a style="color: blue;" href="https://www.mysql.com/">MySQL</a></li>
         </ul>
     <h3 style="font-family: serif;"><b>◼️​ API'S:</b></h3>
         <ul style="margin-top: -10px;">
             <li><a style="color: blue;" href="https://developers.google.com/books">Google Books Api</a></li>
             <li><a style="color: blue;" href="https://docs.mapbox.com/mapbox.js/api/v3.3.1/">Map Box Api</a></li>
         </ul>
-    
-
 </div>
 <hr>
 <h2 id="lib">📚 <u>LIBRARIES</u></h2>
@@ -136,6 +133,5 @@
 <hr>
 <h2 id="views">👀 <u>VIEWS</u></h2>
 <div style="margin-left: 35px;">
-
 </div>
 <hr>
