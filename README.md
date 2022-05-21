@@ -1,9 +1,9 @@
-<h1 style="text-align: center;font-family: fantasy; ">​​♻️​​ WEB ECO-CAR | CONCESIONARIRE ​​​♻️​​​</h1>
+<h1 align="center">​​♻️​​ WEB ECO-CAR | CONCESIONARIRE ​​​♻️​​​</h1>
 <hr style="height: 2px; color:white;">
 <h2 id="index">🔗​ <u>INTRODUCTION</u></h2>
 <div style="margin-left: 35px;">
-    <h4><a style="text-decoration: none; color:black"
-            href="https://github.com/Vicent29/Framework_Concessionaire_PHP_OO_MVC_jQuery.git">What is <b
+    <h4>What is<a style="text-decoration: none; color:black"
+            href="https://github.com/Vicent29/Framework_Concessionaire_PHP_OO_MVC_jQuery.git"><b
                 style="color:blue;">ECO-CAR</b>?</a></h4>
     <p style="margin-top: -10px;">It is a web page in which you can buy any type of car, besides being able to geolocate
         them and log in with your gmail or github, add the cars that you like to favorites and soon we will add the
