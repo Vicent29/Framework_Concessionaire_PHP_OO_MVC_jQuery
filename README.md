@@ -132,5 +132,5 @@
 </div>
 <hr>
 <h2 id="views">👀 <u>VIEWS</u></h2>
-[![ECO-CAR video](https://img.youtube.com/vi/Oxiky1Cg1UE/0.jpg)](https://www.youtube.com/watch?v=Oxiky1Cg1UE)
 <hr>
+[![ECO-CAR video](https://img.youtube.com/vi/Oxiky1Cg1UE/0.jpg)](https://www.youtube.com/watch?v=Oxiky1Cg1UE)
