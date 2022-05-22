@@ -28,8 +28,6 @@
                     href="#tech">TECHNOLOGIES</a></b></li>
         <li style="margin-bottom: 4px;"><b><a style="text-decoration: none; color:black" href="#lib">LIBRERIES</a></b>
         </li>
-        <li style="margin-bottom: 4px;"><b><a style="text-decoration: none; color:black" href="#views">VIEWS</a></b>
-        </li>
     </ul>
 </div>
 <hr>
