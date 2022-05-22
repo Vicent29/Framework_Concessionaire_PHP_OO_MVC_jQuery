@@ -130,7 +130,4 @@
         <li><a style="color: blue;" href="https://kenwheeler.github.io/slick/">Slick slider</a></li>
     </ul>
 </div>
-<hr>
-<h2 id="views">👀 <u>VIEWS</u></h2>
-<hr>
-[![ECO-CAR video](https://img.youtube.com/vi/Oxiky1Cg1UE/0.jpg)](https://www.youtube.com/watch?v=Oxiky1Cg1UE)
+
